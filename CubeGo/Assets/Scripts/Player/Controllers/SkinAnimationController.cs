@@ -22,7 +22,7 @@ public class SkinAnimationController : MonoBehaviour
 
     private void Start()
     {
-        //animator = gameObject.GetComponent<Animator>();
+        animator = gameObject.GetComponent<Animator>();
 
         initPosition = transform.localPosition;
         
@@ -36,13 +36,13 @@ public class SkinAnimationController : MonoBehaviour
 
     public void StartSkinShrinkingAnimation()
     {
-        //animator.ResetTrigger("Expand");
-        //animator.Play("SkinShrinkingAnimation");
+        animator.ResetTrigger("Expand");
+        animator.Play("SkinShrinkingAnimation");
     }
 
     public void StartSkinExpandingAnimation()
     {
-        //animator.SetTrigger("Expand");
+        animator.SetTrigger("Expand");
     }
     
     private void SetJumpingAnimationCurve(float topYPosition)

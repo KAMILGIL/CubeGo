@@ -24,13 +24,15 @@ public class PlayerController : MonoBehaviour
     private PlainHandler plainHanlder;
     private ComplicatedHandler complicatedHandler;
     
-    private Vector3 target, speed, wallUp = new Vector3(270f, 0, 0), leftWall = new Vector3(0f, 0f, 270f), floor = Vector3.zero;
+    private Vector3 target, wallUp = new Vector3(270f, 0, 0), leftWall = new Vector3(0f, 0f, 270f), floor = Vector3.zero;
 
-    private bool isMoving;
+    private Animation movingAnimation;
     
     private void Start()
     {
-        ManageChildren();
+        skinCenter = transform.GetChild(0).gameObject;
+
+        skinAnimationController = skinCenter.GetComponent<SkinAnimationController>();
 
         colliderCreator = GetComponent<ColliderCreator>();
         plainHanlder = GetComponent<PlainHandler>();
@@ -40,21 +42,13 @@ public class PlayerController : MonoBehaviour
         complicatedHandler.playerController = this;
         
         colliderCreator.SetPlayerController(this);
-    }
 
-    private void FixedUpdate()
-    {
-        transform.position += speed;
-        if (transform.position == target)
-        {
-            speed = Vector3.zero;
-            isMoving = false;
-        }
+        movingAnimation = gameObject.AddComponent<Animation>();
     }
 
     public void MoveForward()
     {
-        if (isMoving)
+        if (movingAnimation.isPlaying)
         {
             return;
         }
@@ -89,7 +83,7 @@ public class PlayerController : MonoBehaviour
 
     public void MoveBackward()
     {
-        if (isMoving)
+        if (movingAnimation.isPlaying)
         {
             return;
         }
@@ -122,12 +116,12 @@ public class PlayerController : MonoBehaviour
 
     public void MoveRight()
     {
-        if (isMoving)
+        if (movingAnimation.isPlaying)
         {
             return;
         }
-        
         skinAnimationController.LookRight();
+        
         if (!rightCollider.isCollising && rightBottomCollider.isCollising)
         {
             target = rightBottomCollider.selectedCube.transform.position + transform.position -
@@ -155,12 +149,12 @@ public class PlayerController : MonoBehaviour
 
     public void MoveLeft()
     {
-        if (isMoving)
+        if (movingAnimation.isPlaying)
         {
             return;
         }
-        
         skinAnimationController.LookLeft();
+        
         if (!leftCollider.isCollising && leftBottomCollider.isCollising)
         {
             target = leftBottomCollider.selectedCube.transform.position + transform.position -
@@ -198,17 +192,37 @@ public class PlayerController : MonoBehaviour
 
     private void InitMovement()
     {
-        speed = -(transform.position - target) / 9;
+        StartMovingAnimation();
         cameraController.MoveCamera(target);
         StartExpandingSkin();
         skinAnimationController.PlayJumpingAnimation();
-        isMoving = true;
     }
 
-    private void ManageChildren()
+    private AnimationCurve GetCurve(float initValue, float targetValue)
     {
-        skinCenter = transform.GetChild(0).gameObject;
+        AnimationCurve curve;
+        
+        Keyframe[] keys;
+        keys = new Keyframe[2];
+        keys[0] = new Keyframe(0.0f, initValue);
+        keys[1] = new Keyframe(PlayerSmartSettings.jumpingTime, targetValue);
+        curve = new AnimationCurve(keys);
 
-        skinAnimationController = skinCenter.AddComponent<SkinAnimationController>();
+        return curve;
+    }
+
+    private void StartMovingAnimation()
+    {
+        AnimationClip clip = new AnimationClip();
+        clip.name = "movingAnimation";
+        clip.legacy = true;
+
+        clip.SetCurve("", typeof(Transform), "localPosition.x", GetCurve(transform.localPosition.x, target.x));
+        clip.SetCurve("", typeof(Transform), "localPosition.y", GetCurve(transform.localPosition.y, target.y));
+        clip.SetCurve("", typeof(Transform), "localPosition.z", GetCurve(transform.localPosition.z, target.z));
+
+        movingAnimation.AddClip(clip, clip.name);
+
+        movingAnimation.Play("movingAnimation");
     }
 }

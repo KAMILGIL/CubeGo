@@ -54,7 +54,7 @@ public class CameraController : MonoBehaviour
         Keyframe[] keys;
         keys = new Keyframe[2];
         keys[0] = new Keyframe(0.0f, initValue);
-        keys[1] = new Keyframe(PlayerSmartSettings.jumpingTime * 2.1f, targetValue);
+        keys[1] = new Keyframe(PlayerSmartSettings.jumpingTime * 2.5f, targetValue);
         curve = new AnimationCurve(keys);
 
         return curve;

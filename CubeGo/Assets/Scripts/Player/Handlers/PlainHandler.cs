@@ -10,6 +10,8 @@ public class PlainHandler : MonoBehaviour
 
     private float forwardTime, leftTime, rightTime, backwardTime;
 
+    private float multiplier = 1.5f;
+
     private void Update()
     {
         if (!PlayerSmartSettings.isPlainMode)
@@ -68,11 +70,11 @@ public class PlainHandler : MonoBehaviour
             {
                 if (left.Contains(t.position))
                 {
-                    leftTime = PlayerSmartSettings.jumpingTime;
+                    leftTime = PlayerSmartSettings.jumpingTime * multiplier;
                 } 
                 else if (right.Contains(t.position))
                 {
-                    forwardTime = PlayerSmartSettings.jumpingTime;
+                    forwardTime = PlayerSmartSettings.jumpingTime * multiplier;
                 }
             }
         }
@@ -84,25 +86,25 @@ public class PlainHandler : MonoBehaviour
 
         if (CheckInputMoveForward())
         {
-            forwardTime = PlayerSmartSettings.jumpingTime;
+            forwardTime = PlayerSmartSettings.jumpingTime * multiplier;
             return;
         }
 
         if (CheckInputMoveLeft())
         {
-            leftTime = PlayerSmartSettings.jumpingTime;
+            leftTime = PlayerSmartSettings.jumpingTime * multiplier;
             return;
         }
 
         if (CheckInputMoveBackward())
         {
-            backwardTime = PlayerSmartSettings.jumpingTime;
+            backwardTime = PlayerSmartSettings.jumpingTime *  multiplier;
             return;
         }
 
         if (CheckInputMoveRight())
         {
-            rightTime = PlayerSmartSettings.jumpingTime;
+            rightTime = PlayerSmartSettings.jumpingTime * multiplier;
             return;
         }
     }

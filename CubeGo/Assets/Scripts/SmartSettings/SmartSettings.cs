@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ApplicationSmartSettings : MonoBehaviour
+public class SmartSettings : MonoBehaviour
 {
     private void Awake()
     {
@@ -14,5 +14,5 @@ public class ApplicationSmartSettings : MonoBehaviour
 public class PlayerSmartSettings
 {
     public static bool isPlainMode = true;
-    public static float jumpingTime = 0.18f;
+    public static float jumpingTime = 0.16f;
 }
