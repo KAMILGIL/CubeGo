@@ -148,8 +148,8 @@ public class SkinAnimationController : MonoBehaviour
 
     public void RotateSkinFromFloorToWallUp()
     {
-        skin.transform.localEulerAngles = Vector3.left * 90f;
-        SetSkinRotationAnimationCurve(360f);
-        PlaySkinRotationAnimation();
+        //skin.transform.localEulerAngles = Vector3.left * 90f;
+        //SetSkinRotationAnimationCurve(360f);
+        //PlaySkinRotationAnimation();
     }
 }

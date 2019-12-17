@@ -8,7 +8,9 @@ public class CameraController : MonoBehaviour
 {
     public GameObject player;
 
-    public MapGenerator mapGenerator;
+    private MapGenerator mapGenerator;
+
+    private PlayerController playerController;
 
     private Vector3 playerDelta, target, speed = Vector3.forward * 0.8f;
 
@@ -16,7 +18,8 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        player.GetComponent<PlayerController>().cameraController = this;
+        playerController = player.GetComponent<PlayerController>();
+        playerController.cameraController = this;
         transform.LookAt(player.transform);
 
         playerDelta = transform.position - player.transform.position;
@@ -24,6 +27,8 @@ public class CameraController : MonoBehaviour
         movingAnimation = gameObject.AddComponent<Animation>();
 
         mapGenerator = gameObject.GetComponent<MapGenerator>();
+
+        playerController.mapGenerator = mapGenerator;
     }
 
     private void Update()

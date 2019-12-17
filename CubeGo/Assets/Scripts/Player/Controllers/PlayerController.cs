@@ -10,11 +10,15 @@ public class PlayerController : MonoBehaviour
 {
     public CameraController cameraController;
 
+    public GameObject platform;
+
     public ColliderController leftCollider, leftBottomCollider,
         forwardCollider, forwardBottomCollider,
         rightCollider, rightBottomCollider,
         backCollider, backBottomCollider,
         bottomCollider;
+
+    public MapGenerator mapGenerator;
     
     private GameObject skinCenter;
 
@@ -24,9 +28,9 @@ public class PlayerController : MonoBehaviour
     private PlainHandler plainHanlder;
     private ComplicatedHandler complicatedHandler;
     
-    private Vector3 target, wallUp = new Vector3(270f, 0, 0), leftWall = new Vector3(0f, 0f, 270f), floor = Vector3.zero;
+    private Vector3 target, targetRotation, wallUp = new Vector3(-90f, 0, 0), leftWall = new Vector3(0f, 0f, -90f), floor = Vector3.zero;
 
-    private Animation movingAnimation;
+    public Animation movingAnimation;
     
     private void Start()
     {
@@ -66,8 +70,7 @@ public class PlayerController : MonoBehaviour
         if (forwardCollider.isCollising)
         {
             target = forwardCollider.selectedCube.transform.position + Vector3.back; 
-            transform.rotation = Quaternion.Euler(wallUp);
-            skinAnimationController.RotateSkinFromFloorToWallUp();
+            targetRotation = wallUp;
             InitMovement();
             return;
         }
@@ -75,7 +78,7 @@ public class PlayerController : MonoBehaviour
         if (!forwardCollider.isCollising && !forwardBottomCollider.isCollising)
         {
             target = bottomCollider.selectedCube.transform.position + Vector3.up;
-            transform.rotation = Quaternion.Euler(floor);
+            targetRotation = floor;
             InitMovement();
             return;
         }
@@ -99,8 +102,8 @@ public class PlayerController : MonoBehaviour
 
         if (backCollider.isCollising)
         {
-            target = backCollider.selectedCube.transform.position + Vector3.up; 
-            transform.rotation = Quaternion.Euler(floor);
+            target = backCollider.selectedCube.transform.position + Vector3.up;
+            targetRotation = floor;
             InitMovement();
             return;
         }
@@ -108,7 +111,7 @@ public class PlayerController : MonoBehaviour
         if (!backCollider.isCollising && !backBottomCollider.isCollising)
         {
             target = bottomCollider.selectedCube.transform.position + Vector3.back;
-            transform.rotation = Quaternion.Euler(wallUp); 
+            targetRotation = wallUp;
             InitMovement();
             return;
         }
@@ -133,7 +136,7 @@ public class PlayerController : MonoBehaviour
         if (rightCollider.isCollising)
         {
             target = rightCollider.selectedCube.transform.position + Vector3.up;
-            transform.rotation = Quaternion.Euler(floor); 
+            targetRotation = floor; 
             InitMovement();
             return;
         }
@@ -141,7 +144,7 @@ public class PlayerController : MonoBehaviour
         if (!rightCollider.isCollising && !rightBottomCollider.isCollising)
         {
             target = bottomCollider.selectedCube.transform.position + Vector3.right; 
-            transform.rotation = Quaternion.Euler(leftWall);
+            targetRotation = leftWall;
             InitMovement();
             return;
         }
@@ -166,7 +169,7 @@ public class PlayerController : MonoBehaviour
         if (leftCollider.isCollising)
         {
             target = leftCollider.selectedCube.transform.position + Vector3.right;
-            transform.rotation = Quaternion.Euler(leftWall);
+            targetRotation = leftWall;
             InitMovement();
             return;
         }
@@ -174,7 +177,7 @@ public class PlayerController : MonoBehaviour
         if (!leftCollider.isCollising && !leftBottomCollider.isCollising)
         {
             target = bottomCollider.selectedCube.transform.position + Vector3.up;
-            transform.rotation = Quaternion.Euler(floor); 
+            targetRotation = floor; 
             InitMovement();
             return;
         }
@@ -193,8 +196,8 @@ public class PlayerController : MonoBehaviour
     private void InitMovement()
     {
         StartMovingAnimation();
+        // say mapGenerator that player moved 
         cameraController.MoveCamera(target);
-        StartExpandingSkin();
         skinAnimationController.PlayJumpingAnimation();
     }
 
@@ -221,8 +224,35 @@ public class PlayerController : MonoBehaviour
         clip.SetCurve("", typeof(Transform), "localPosition.y", GetCurve(transform.localPosition.y, target.y));
         clip.SetCurve("", typeof(Transform), "localPosition.z", GetCurve(transform.localPosition.z, target.z));
 
+        if (!AbsoluteRotationComparison(transform.localEulerAngles, targetRotation, 1f))
+        {
+            clip.SetCurve("", typeof(Transform), "localEulerAngels.x", GetCurve(transform.localEulerAngles.x, targetRotation.x));
+            clip.SetCurve("", typeof(Transform), "localEulerAngels.y", GetCurve(transform.localEulerAngles.x, targetRotation.y));
+            clip.SetCurve("", typeof(Transform), "localEulerAngels.z", GetCurve(transform.localEulerAngles.x, targetRotation.z));
+        } 
+        
         movingAnimation.AddClip(clip, clip.name);
 
         movingAnimation.Play("movingAnimation");
+    }
+
+    private bool CompareVectors(Vector3 vector1, Vector3 vector2, float epsilon)
+    {
+        if (Math.Abs(vector1.x - vector2.x) <= epsilon && Math.Abs(vector1.y - vector2.y) <= epsilon && Math.Abs(vector1.z - vector2.z) <= epsilon)
+        {
+            return true;
+        }
+
+        return false;
+    }
+    
+    private bool AbsoluteRotationComparison(Vector3 vector1, Vector3 vector2, float epsilon)
+    {
+        if (Math.Abs((vector1.x + 360) % 360 - (vector2.x + 360) % 360) <= epsilon && Math.Abs((vector1.y + 360) % 360 - (vector2.y + 360) % 360) <= epsilon && Math.Abs((vector1.z + 360) % 360 - (vector2.z + 360) % 360) <= epsilon)
+        {
+            return true;
+        }
+
+        return false;
     }
 }

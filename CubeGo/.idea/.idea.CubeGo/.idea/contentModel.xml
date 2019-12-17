@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ContentModelStore">
     <e p="$USER_HOME$/Library/Caches/Rider2019.2/extResources" t="IncludeRecursive" />
-    <e p="$USER_HOME$/Library/Caches/Rider2019.2/resharper-host/local/Transient/ReSharperHost/v192/SolutionCaches/_CubeGo.-1227936013.00" t="ExcludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2019.2/resharper-host/local/Transient/ReSharperHost/v192/SolutionCaches/_CubeGo.1251773765.00" t="ExcludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
@@ -27,6 +27,10 @@
           </e>
           <e p="MapGenerator" t="Include">
             <e p="MapGenerator.cs" t="Include" />
+          </e>
+          <e p="Platform" t="Include">
+            <e p="BlockController.cs" t="Include" />
+            <e p="PlatformController.cs" t="Include" />
           </e>
           <e p="Player" t="Include">
             <e p="ColliderCreator.cs" t="Include" />
