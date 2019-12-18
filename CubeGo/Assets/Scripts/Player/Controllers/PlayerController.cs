@@ -31,7 +31,12 @@ public class PlayerController : MonoBehaviour
     private Vector3 target, targetRotation, wallUp = new Vector3(-90f, 0, 0), leftWall = new Vector3(0f, 0f, -90f), floor = Vector3.zero;
 
     public Animation movingAnimation;
-    
+
+    private void Update()
+    {
+        
+    }
+
     private void Start()
     {
         skinCenter = transform.GetChild(0).gameObject;
@@ -56,6 +61,8 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+        
+        mapGenerator.MovedForward(bottomCollider.GetPlatform());
         skinAnimationController.LookForward();
         
         if (!forwardCollider.isCollising && forwardBottomCollider.isCollising)
@@ -90,6 +97,8 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+        
+        //mapGenerator.MovedBackward(bottomCollider.GetPlatform());
         skinAnimationController.LookBack();
         
         if (!backCollider.isCollising && backBottomCollider.isCollising)
@@ -123,6 +132,8 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+        
+        mapGenerator.MovedRight(bottomCollider.GetPlatform());
         skinAnimationController.LookRight();
         
         if (!rightCollider.isCollising && rightBottomCollider.isCollising)
@@ -156,6 +167,8 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+        
+        mapGenerator.MovedLeft(bottomCollider.GetPlatform());
         skinAnimationController.LookLeft();
         
         if (!leftCollider.isCollising && leftBottomCollider.isCollising)

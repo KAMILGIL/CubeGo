@@ -7,8 +7,7 @@ using Vector3 = UnityEngine.Vector3;
 
 // Player
 //   SkinCenter
-//     RotationPivot
-//       moonPlayer(or whatever)
+//     moonPlayer(or whatever)
 
 public class SkinAnimationController : MonoBehaviour
 {
@@ -16,7 +15,7 @@ public class SkinAnimationController : MonoBehaviour
     
     private Animator animator;
 
-    private Animation jumpingAnimation, skinRotationAnimation, pivotRotationAnimation;
+    private Animation jumpingAnimation, pivotRotationAnimation;
 
     private Vector3 initPosition;
 
@@ -31,7 +30,6 @@ public class SkinAnimationController : MonoBehaviour
 
         jumpingAnimation = gameObject.AddComponent<Animation>();
         pivotRotationAnimation = skinPivot.AddComponent<Animation>();
-        skinRotationAnimation = skin.AddComponent<Animation>();
     }
 
     public void StartSkinShrinkingAnimation()
@@ -122,34 +120,5 @@ public class SkinAnimationController : MonoBehaviour
     {
         SetPivotRotationAnimationCurve(0);
         PlayPivotRotationAnimation();
-    }
-
-    private void SetSkinRotationAnimationCurve(float targetRotation)
-    {
-        AnimationCurve curve;
-        AnimationClip clip = new AnimationClip();
-        clip.name = "rotationAnimation";
-        clip.legacy = true;
-
-        Keyframe[] keys;
-        keys = new Keyframe[2];
-        keys[0] = new Keyframe(0.0f, skin.transform.localEulerAngles.x);
-        keys[1] = new Keyframe(PlayerSmartSettings.jumpingTime, targetRotation);
-        curve = new AnimationCurve(keys);
-        clip.SetCurve("", typeof(Transform), "localEulerAngels.x", curve);
-
-        skinRotationAnimation.AddClip(clip, clip.name);
-    }
-    
-    private void PlaySkinRotationAnimation()
-    {
-        skinRotationAnimation.Play("rotationAnimation");
-    }
-
-    public void RotateSkinFromFloorToWallUp()
-    {
-        //skin.transform.localEulerAngles = Vector3.left * 90f;
-        //SetSkinRotationAnimationCurve(360f);
-        //PlaySkinRotationAnimation();
     }
 }

@@ -7,7 +7,7 @@ public class ColliderController : MonoBehaviour
 {
     public bool isCollising;
     public GameObject selectedCube;
- 
+
     private void OnTriggerEnter(Collider other)
     {
         print("entered");
@@ -26,5 +26,10 @@ public class ColliderController : MonoBehaviour
         print("staying");
         isCollising = true;
         selectedCube = other.gameObject;
+    }
+
+    public GameObject GetPlatform()
+    {
+        return selectedCube.GetComponent<BlockController>().platform;
     }
 }

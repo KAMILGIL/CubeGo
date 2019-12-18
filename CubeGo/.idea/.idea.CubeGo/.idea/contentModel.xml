@@ -47,6 +47,9 @@
           <e p="SmartSettings" t="Include">
             <e p="SmartSettings.cs" t="Include" />
           </e>
+          <e p="Temp" t="Include">
+            <e p="MovingBlockController.cs" t="Include" />
+          </e>
         </e>
       </e>
       <e p="CubeGo.sln" t="IncludeFlat" />
