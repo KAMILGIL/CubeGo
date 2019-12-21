@@ -73,7 +73,6 @@ public class PlainHandler : MonoBehaviour
             if (t.phase == TouchPhase.Ended)
             {
                 var deltaVector = touchStartPosition - t.position;
-                print("ended");
                 print(deltaVector);
 
                 if (Math.Abs(deltaVector.x) >= 0.8f && Math.Abs(deltaVector.y) >= 0.8f)

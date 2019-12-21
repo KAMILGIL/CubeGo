@@ -10,7 +10,6 @@ public class ColliderController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print("entered");
         isCollising = true;
         selectedCube = other.gameObject;
     }
@@ -23,7 +22,6 @@ public class ColliderController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        print("staying");
         isCollising = true;
         selectedCube = other.gameObject;
     }

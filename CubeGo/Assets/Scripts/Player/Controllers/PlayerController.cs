@@ -98,9 +98,9 @@ public class PlayerController : MonoBehaviour
             return;
         }
         
-        //mapGenerator.MovedBackward(bottomCollider.GetPlatform());
+        mapGenerator.MovedBackward(bottomCollider.GetPlatform());
         skinAnimationController.LookBack();
-        
+
         if (!backCollider.isCollising && backBottomCollider.isCollising)
         {
             target = backBottomCollider.selectedCube.transform.position + transform.position -
@@ -242,7 +242,7 @@ public class PlayerController : MonoBehaviour
             clip.SetCurve("", typeof(Transform), "localEulerAngels.x", GetCurve(transform.localEulerAngles.x, targetRotation.x));
             clip.SetCurve("", typeof(Transform), "localEulerAngels.y", GetCurve(transform.localEulerAngles.x, targetRotation.y));
             clip.SetCurve("", typeof(Transform), "localEulerAngels.z", GetCurve(transform.localEulerAngles.x, targetRotation.z));
-        } 
+        }
         
         movingAnimation.AddClip(clip, clip.name);
 

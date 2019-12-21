@@ -18,6 +18,11 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
+        if (!PlayerSmartSettings.isPlainMode)
+        {
+            transform.position = new Vector3(3, 10, -10);
+        }
+        
         playerController = player.GetComponent<PlayerController>();
         playerController.cameraController = this;
         transform.LookAt(player.transform);
@@ -41,6 +46,7 @@ public class CameraController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             player.transform.position = Vector3.up;
+            player.transform.rotation = Quaternion.identity;
             transform.position = player.transform.position + playerDelta;
         }
     }
