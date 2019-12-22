@@ -10,7 +10,7 @@ public class BlockController : MonoBehaviour
 
     private void Start()
     {
-        platform = transform.parent.transform.parent.transform.parent.gameObject;
-        platformController = platform.GetComponent<PlatformController>();
+        platform = transform.parent.parent.gameObject;
+        //platformController = platform.GetComponent<PlatformController>();
     }
 } 

@@ -40,7 +40,7 @@ public class CameraController : MonoBehaviour
     {
         if (!movingAnimation.isPlaying)
         {
-            transform.position += speed * Time.deltaTime;
+            //transform.position += speed * Time.deltaTime;
         }
 
         if (Input.GetKeyDown(KeyCode.R))
