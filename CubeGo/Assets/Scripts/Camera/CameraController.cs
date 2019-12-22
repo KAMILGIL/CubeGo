@@ -49,6 +49,17 @@ public class CameraController : MonoBehaviour
             player.transform.rotation = Quaternion.identity;
             transform.position = player.transform.position + playerDelta;
         }
+
+        if (Input.deviceOrientation == DeviceOrientation.LandscapeLeft ^ Input.deviceOrientation == DeviceOrientation.LandscapeRight)
+        {
+            print("landscape");
+            var camera = this.GetComponent<Camera>();
+            camera.orthographicSize = 3f;
+        }
+        else
+        {
+            print("portrait");
+        }
     }
 
     public void MoveCamera(Vector3 position)

@@ -14,6 +14,6 @@ public class SmartSettings : MonoBehaviour
 
 public class PlayerSmartSettings
 {
-    public static bool isPlainMode = false;
+    public static bool isPlainMode = true;
     public static float jumpingTime = 0.18f;
 }

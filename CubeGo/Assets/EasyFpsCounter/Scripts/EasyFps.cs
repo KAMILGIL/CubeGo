@@ -68,6 +68,7 @@ public class EasyFps : MonoBehaviour {
 
     void Update()
     {
+        //txt.text = Screen.orientation.ToString(); this line turns fps counter into screen oritation teller 
         if (timeCounter < refresht)
         {
             timeCounter += Time.deltaTime;
