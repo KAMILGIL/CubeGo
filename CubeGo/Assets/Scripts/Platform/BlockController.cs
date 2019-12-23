@@ -11,6 +11,5 @@ public class BlockController : MonoBehaviour
     private void Start()
     {
         platform = transform.parent.gameObject;
-        //platformController = platform.GetComponent<PlatformController>();
     }
 } 

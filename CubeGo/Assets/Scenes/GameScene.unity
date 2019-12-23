@@ -264,7 +264,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 4.5796e-41, y: 7.6812725e-32, z: 1e-45, w: 7.68131e-32}
+  m_BoundingSphereOverride: {x: NaN, y: 6.8000833e+22, z: NaN, w: 3.7911973e+22}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -337,7 +337,7 @@ Camera:
   far clip plane: 50
   field of view: 60
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 6.7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -379,8 +379,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6f5c3208188542968dcd8ea5470749a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platformPrefab: {fileID: 7986154704084909499, guid: 5a35071fb288b43c89ecdb619a860962,
-    type: 3}
+  platformPrefabs:
+  - {fileID: 5098393267915801012, guid: ed073b24d53d84339b81aaea3b19d88e, type: 3}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0

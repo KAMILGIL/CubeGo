@@ -32,9 +32,14 @@ public class PlayerController : MonoBehaviour
 
     public Animation movingAnimation;
 
+    public GameObject currentPlatform;
+
     private void Update()
     {
-        
+        if (bottomCollider.selectedCube)
+        {
+            currentPlatform = bottomCollider.GetPlatform();
+        }
     }
 
     private void Start()

@@ -16,6 +16,8 @@ public class CameraController : MonoBehaviour
 
     private Animation movingAnimation;
 
+    private Camera camera; 
+
     private void Start()
     {
         if (!PlayerSmartSettings.isPlainMode)
@@ -33,7 +35,10 @@ public class CameraController : MonoBehaviour
 
         mapGenerator = gameObject.GetComponent<MapGenerator>();
 
+        mapGenerator.playerController = playerController;
         playerController.mapGenerator = mapGenerator;
+
+        camera = GetComponent<Camera>(); 
     }
 
     private void Update()
@@ -52,13 +57,11 @@ public class CameraController : MonoBehaviour
 
         if (Input.deviceOrientation == DeviceOrientation.LandscapeLeft ^ Input.deviceOrientation == DeviceOrientation.LandscapeRight)
         {
-            print("landscape");
-            var camera = this.GetComponent<Camera>();
-            camera.orthographicSize = 3f;
+            camera.orthographicSize = 3.3f;
         }
         else
         {
-            print("portrait");
+            camera.orthographicSize = 6.7f;
         }
     }
 
