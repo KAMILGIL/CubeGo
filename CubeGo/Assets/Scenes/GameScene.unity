@@ -381,6 +381,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformPrefabs:
   - {fileID: 5098393267915801012, guid: ed073b24d53d84339b81aaea3b19d88e, type: 3}
+  playerController: {fileID: 0}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
