@@ -6,11 +6,12 @@ ScriptsOnlyBuild:
     - ColliderController
     - ColliderCreator
     - ComplicatedHandler
-    - CornerController
     - EasyFps
     - MapGenerator
     - PlainHandler
+    - PlatformController
     - PlayerController
+    - PrefabManager
     - SkinAnimationController
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.RiderScriptEditorData
@@ -87,17 +88,19 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11712}
     - Class: 114
+      Script: {instanceID: 11738}
+    - Class: 114
       Script: {instanceID: 11926}
     - Class: 114
       Script: {instanceID: 11996}
     - Class: 114
       Script: {instanceID: 12076}
     - Class: 114
-      Script: {instanceID: 12568}
+      Script: {instanceID: 12482}
     - Class: 114
-      Script: {instanceID: 12614}
+      Script: {instanceID: 12570}
     - Class: 114
-      Script: {instanceID: 136442}
+      Script: {instanceID: 12616}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -121,7 +124,7 @@ ScriptsOnlyBuild:
     className: CanvasScaler
   - hash:
       serializedVersion: 2
-      Hash: 5e9e72bb94684089f1710b8110e3a23b
+      Hash: 600fc192435f45b67f039381b3cfcb18
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MapGenerator
@@ -331,6 +334,12 @@ ScriptsOnlyBuild:
     className: ControlPlayableAsset
   - hash:
       serializedVersion: 2
+      Hash: 91e34ffb94493ea31ef79ac4812bb867
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PrefabManager
+  - hash:
+      serializedVersion: 2
       Hash: b8a5e8091ab0b8861d2add371082c5e0
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -347,12 +356,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Selectable
-  - hash:
-      serializedVersion: 2
-      Hash: 8ae70cbfd4b2e4d4f4ef69950cf95f58
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: PlatformController
   - hash:
       serializedVersion: 2
       Hash: b3ab2106268377ffe25dd18ac23dca28
@@ -385,7 +388,7 @@ ScriptsOnlyBuild:
     className: TMP_SpriteAnimator
   - hash:
       serializedVersion: 2
-      Hash: 01a16efbd247e8365b50ac6fc34272a1
+      Hash: 23bab2fcd6d5f2284f925728e0594554
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerController
@@ -473,6 +476,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: TimelineAsset
+  - hash:
+      serializedVersion: 2
+      Hash: 5d3e0959df906c1805332c70cb458b09
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PlatformController
   - hash:
       serializedVersion: 2
       Hash: 3b760e6526e13f7504f59e210145899a
@@ -623,18 +632,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: da4c32122446fe87997abcbafa0beb33
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: CreatorScript
-  - hash:
-      serializedVersion: 2
-      Hash: bc8f56f8db06c1126ef2610c9966835b
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: CornerController
   platform: 9
   scenePathNames:
   - Assets/Scenes/GameScene.unity

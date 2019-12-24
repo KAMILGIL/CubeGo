@@ -63,7 +63,7 @@ public class SkinAnimationController : MonoBehaviour
 
     public void PlayJumpingAnimation()
     {
-        SetJumpingAnimationCurve(0f);
+        SetJumpingAnimationCurve(-0.1f);
         jumpingAnimation.Play("jumpAnimation");
     }
     

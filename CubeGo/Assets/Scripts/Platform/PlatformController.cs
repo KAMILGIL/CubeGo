@@ -9,18 +9,20 @@ public class PlatformController : MonoBehaviour
 {
     public Vector3 size;
 
-    public string platformData; // data format is "size.z-size.x-size.y-horizontalType-verticalType" example: "8-10-7-Common-Common"
+    public PlatformType horizontalType, verticalType;
+
+    public PlatformData platformData; 
     
     public GameObject[,] horizontalBlocks, verticalBlocks;
+
+    public void SetPlatformData()
+    {
+        platformData = new PlatformData(horizontalType, verticalType, size);
+    }
     
     private void Start()
     {
         GetBlocks();
-    }
-
-    public string GetData()
-    {
-        return size.z.ToString() + "-" + size.x.ToString() + "-" + size.y.ToString() + "-" + platformData;
     }
 
     private void GetBlocks()
@@ -54,29 +56,30 @@ public class PlatformController : MonoBehaviour
     }
 }
 
-public class PlatformSize
-{
-    public float length, width, height;
-
-    public PlatformSize(float length, float width, float height)
-    {
-        this.length = length;
-        this.width = width;
-        this.height = height;
-    }
-}
-
 public class PlatformData
 {
     public PlatformType horizontalType = PlatformType.Common, verticalType = PlatformType.Common;
 
-    public PlatformSize platformSize;
+    public Vector3 size;
 
-    public PlatformData(PlatformType horizontalType, PlatformType verticalType, PlatformSize platformSize)
+    public bool isAny = false; 
+
+    public PlatformData(PlatformType horizontalType, PlatformType verticalType, Vector3 size)
     {
         this.horizontalType = horizontalType;
         this.verticalType = verticalType;
-        this.platformSize = platformSize;
+        this.size = size;
+    }
+
+    public PlatformData(bool isAny)
+    {
+        this.isAny = true;
+    }
+
+    public override string ToString()
+    {
+        return size.x.ToString() + "-" + size.y.ToString() + "-" + size.z.ToString() + "-" + PlatformTypeExtension.ToFriendlyString(horizontalType) +
+               PlatformTypeExtension.ToFriendlyString(verticalType);
     }
 }
 
@@ -86,6 +89,27 @@ public enum PlatformType
     Cars, 
     MovingBlocks, 
     River, 
-    CarsAndRiver, 
-    Any
+    CarsAndRiver
+}
+
+public static class PlatformTypeExtension
+{
+    public static string ToFriendlyString(this PlatformType me)
+    {
+        switch(me)
+        {
+            case PlatformType.Common:
+                return "Common";
+            case PlatformType.Cars:
+                return "Cars";
+            case PlatformType.MovingBlocks:
+                return "MovingBlocks";
+            case PlatformType.River:
+                return "River";
+            case PlatformType.CarsAndRiver:
+                return "CarsAndRiver";
+            default:
+                return "Get your damn dirty hands off me you FILTHY APE!";
+        }
+    }
 }

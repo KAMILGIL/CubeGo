@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
-using UnityEditor;
 using Random = UnityEngine.Random;
 
 public class PrefabManager : MonoBehaviour
@@ -15,10 +14,16 @@ public class PrefabManager : MonoBehaviour
     public Dictionary<string, List<int>> data = new Dictionary<string, List<int>>();
     public List<string> keys = new List<string>();
 
+    private string[] names = new string[]{"P(10-4-6)", "P(10-7-8)", "P(10-10-10)"};
+
     private void LoadPrefabs()
     {
-        UnityEngine.Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Objects/MapPrefab/Platform.prefab", typeof(GameObject)); 
-        prefabs.Add(prefab as GameObject);
+        print(names);
+        foreach (string name in names)
+        {
+            prefabs.Add(Resources.Load<GameObject>("MapPrefabs/" + name));
+        }
+        print(prefabs.Count);
     }
 
     public void HandlePrefabs()
@@ -28,27 +33,35 @@ public class PrefabManager : MonoBehaviour
         {
             HandlePrefab(i);
         }
+        print(keys);
     }
 
     private void HandlePrefab(int index)
     {
-        string key = prefabs[index].GetComponent<PlatformController>().GetData();
-        if (!data.ContainsKey(key)) 
+        prefabs[index].GetComponent<PlatformController>().SetPlatformData();
+        string key = prefabs[index].GetComponent<PlatformController>().platformData.ToString();
+        print(key);
+        if (!keys.Contains(key)) 
         {
             data[key] = new List<int>();
+            keys.Add(key);
         }
         
         data[key].Add(index);
-        keys.Add(key);
     }
 
-    public GameObject GetPrefab(string conditions) // if is equal to 'Any' returns random prefab 
+    public GameObject GetPrefab(PlatformData conditions) // if is equal to 'Any' returns random prefab 
     {
-        if (conditions == "Any")
+        if (conditions.isAny) // any size and any types of both block arrays 
         {
-            return prefabs[data[keys[Random.Range(0, keys.Count - 1)]][0]];
+            string randomKey = keys[Random.Range(0, keys.Count)];
+            print(randomKey);
+            return prefabs[data[randomKey][0]]; // must be random index, not only zero 
         }
-
-        return prefabs[data["0"][0]];
+        // give other platform with same conditions
+        
+        string key = conditions.ToString();
+        print(key);
+        return prefabs[data[key][0]]; // might be not only zero 
     }
 }
