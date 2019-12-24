@@ -6,7 +6,6 @@ using UnityEngine;
 public class BlockController : MonoBehaviour
 {
     public GameObject platform;
-    private PlatformController platformController; 
 
     private void Start()
     {

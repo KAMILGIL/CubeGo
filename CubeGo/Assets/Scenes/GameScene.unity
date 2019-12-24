@@ -264,7 +264,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: NaN, y: 6.8000833e+22, z: NaN, w: 3.7911973e+22}
+  m_BoundingSphereOverride: {x: 1e-45, y: 1.16e-43, z: 0, w: 62.49643}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -295,6 +295,7 @@ GameObject:
   - component: {fileID: 963194226}
   - component: {fileID: 963194230}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194231}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -379,8 +380,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6f5c3208188542968dcd8ea5470749a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platformPrefabs:
-  - {fileID: 5098393267915801012, guid: ed073b24d53d84339b81aaea3b19d88e, type: 3}
   playerController: {fileID: 0}
 --- !u!114 &963194230
 MonoBehaviour:
@@ -395,6 +394,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1573695096}
+--- !u!114 &963194231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2654225096d546969f948c257421e6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs: []
+  keys: []
 --- !u!1 &1573695096 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6903960860440551203, guid: 906aed22e4cb846c59903037c281fdb1,
