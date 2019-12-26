@@ -248,6 +248,7 @@ MonoBehaviour:
   bottomCollider: {fileID: 0}
   mapGenerator: {fileID: 0}
   movingAnimation: {fileID: 0}
+  currentPlatform: {fileID: 0}
 --- !u!114 &2604588914381671198
 MonoBehaviour:
   m_ObjectHideFlags: 0

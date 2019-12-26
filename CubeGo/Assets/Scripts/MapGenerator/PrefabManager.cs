@@ -21,7 +21,7 @@ public class PrefabManager : MonoBehaviour
         print(names);
         foreach (string name in names)
         {
-            prefabs.Add(Resources.Load<GameObject>("MapPrefabs/" + name));
+            prefabs.Add(Resources.Load<GameObject>("MapPrefabs/Platforms/" + name));
         }
         print(prefabs.Count);
     }

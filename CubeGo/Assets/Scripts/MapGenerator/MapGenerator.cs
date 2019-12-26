@@ -19,7 +19,7 @@ public class MapGenerator : MonoBehaviour
     private List<Layer> layers = new List<Layer>();
     
     private int visibleBlocks = 1;
-    private Vector3 visionVector = new Vector3(12, 12, 0);
+    private Vector3 visionVector = new Vector3(23, 12, 0);
 
     private void Start()
     {

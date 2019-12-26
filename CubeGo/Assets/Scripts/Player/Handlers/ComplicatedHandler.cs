@@ -3,101 +3,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class ComplicatedHandler : MonoBehaviour
 {
-
     public PlayerController playerController;
-
-    private float forwardTime, leftTime, rightTime, backwardTime;
 
     private float multiplier = 1f;
 
-    private Vector2 touchStartPosition; 
+    private Vector2 touchStartPosition;
+
+    public List<SmartMove> moves = new List<SmartMove>();
 
     private void Update()
     {
+        var count = moves.Count; 
+        for (int i = 0; i < count; i++)
+        {
+            moves[i].time -= Time.deltaTime; 
+            if (moves[i].time < 0)
+            {
+                moves.RemoveAt(0); 
+            }
+            else
+            {
+                break; 
+            }
+        }
+
         if (PlayerSmartSettings.isPlainMode)
         {
             return;
         }
-        
-        if (forwardTime > 0f && !playerController.movingAnimation.isPlaying)
-        {
-            playerController.MoveForward();
-            playerController.StartExpandingSkin();
-            forwardTime = 0f;
-            return;
-        }
-        
-        if (rightTime > 0f && !playerController.movingAnimation.isPlaying)
-        {
-            playerController.MoveRight();
-            playerController.StartExpandingSkin();
-            rightTime = 0f;
-            return;
-        }
 
-        if (leftTime > 0f && !playerController.movingAnimation.isPlaying)
-        {
-            playerController.MoveLeft();
-            playerController.StartExpandingSkin();
-            leftTime = 0f;
-            return;
-        }
-
-        if (backwardTime > 0f && !playerController.movingAnimation.isPlaying)
-        {
-            playerController.MoveBackward();
-            playerController.StartExpandingSkin();
-            backwardTime = 0f;
-            return;
-        }
-        
-        forwardTime -= Time.deltaTime;
-        leftTime -= Time.deltaTime;
-        rightTime -= Time.deltaTime;
-        backwardTime -= Time.deltaTime;
-
-        if (Input.touches.Length > 0)
-        {
-            Touch t = Input.GetTouch(0);
-            if (t.phase == TouchPhase.Began)
-            {
-                playerController.StartShrinkingSkin();
-                touchStartPosition = t.position;
-            }
-            if (t.phase == TouchPhase.Ended)
-            {
-                var deltaVector = touchStartPosition - t.position;
-                print("ended");
-                print(deltaVector);
-
-                if (Math.Abs(deltaVector.x) >= 0.8f && Math.Abs(deltaVector.y) >= 0.8f)
-                {
-                    if (deltaVector.x < 0 && deltaVector.y > 0)
-                    {
-                        rightTime = PlayerSmartSettings.jumpingTime * multiplier;
-                    }
-                    else if (deltaVector.x < 0 && deltaVector.y < 0)
-                    {
-                        forwardTime = PlayerSmartSettings.jumpingTime * multiplier;
-                    }
-                    else if (deltaVector.x > 0 && deltaVector.y > 0)
-                    {
-                        backwardTime = PlayerSmartSettings.jumpingTime * multiplier;
-                    }
-                    else if (deltaVector.x > 0 && deltaVector.y < 0)
-                    {
-                        leftTime = PlayerSmartSettings.jumpingTime * multiplier;
-                    }
-                }
-                else 
-                {
-                    forwardTime = PlayerSmartSettings.jumpingTime * multiplier;
-                }
-            }
-        }
-        
         if (CheckInputIn())
         {
             playerController.StartShrinkingSkin();
@@ -105,32 +42,57 @@ public class ComplicatedHandler : MonoBehaviour
 
         if (CheckInputMoveForward())
         {
-            forwardTime = PlayerSmartSettings.jumpingTime * multiplier;
-            return;
+            moves.Add(new SmartMove(MoveType.Forward));
         }
 
         if (CheckInputMoveLeft())
         {
-            leftTime = PlayerSmartSettings.jumpingTime * multiplier;
-            return;
+            moves.Add(new SmartMove(MoveType.Left));
         }
 
         if (CheckInputMoveBackward())
         {
-            backwardTime = PlayerSmartSettings.jumpingTime *  multiplier;
-            return;
+            moves.Add(new SmartMove(MoveType.Backward));
         }
 
         if (CheckInputMoveRight())
         {
-            rightTime = PlayerSmartSettings.jumpingTime * multiplier;
+            moves.Add(new SmartMove(MoveType.Right));
+        }
+
+        if (moves.Count == 0)
+        {
+            return; 
+        }
+        if (playerController.movingAnimation.isPlaying)
+        {
             return;
         }
+
+        playerController.StartExpandingSkin();
+        if (moves[0].moveType == MoveType.Forward)
+        {
+            playerController.MoveForward(); 
+        }
+        else if (moves[0].moveType == MoveType.Backward)
+        {
+            playerController.MoveBackward();
+        }
+        else if (moves[0].moveType == MoveType.Right)
+        {
+            playerController.MoveRight();
+        }
+        else if (moves[0].moveType == MoveType.Left)
+        {
+            playerController.MoveLeft();
+        }
+
+        moves.RemoveAt(0);
     }
 
     private bool CheckInputIn()
     {
-        if (Input.GetKeyDown(KeyCode.A) || 
+        if (Input.GetKeyDown(KeyCode.A) ||
             Input.GetKeyDown(KeyCode.D) ||
             Input.GetKeyDown(KeyCode.W) ||
             Input.GetKeyDown(KeyCode.S))
@@ -178,5 +140,25 @@ public class ComplicatedHandler : MonoBehaviour
         }
 
         return false;
+    }
+}
+
+public enum MoveType
+{
+    Right, 
+    Left, 
+    Forward,
+    Backward
+}
+
+public class SmartMove
+{
+    public MoveType moveType;
+    public float time = 0; 
+
+    public SmartMove(MoveType moveType)
+    {
+        this.time = PlayerSmartSettings.jumpingTime;
+        this.moveType = moveType;
     }
 }

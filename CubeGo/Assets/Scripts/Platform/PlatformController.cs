@@ -39,13 +39,11 @@ public class PlatformController : MonoBehaviour
             if (child.transform.localPosition.y == 0)
             {
                 horizontalBlocks[(int)child.transform.localPosition.z, Math.Abs((int)child.transform.localPosition.x)] = child;
-                //Destroy(child.transform.GetChild(0).gameObject);
             }
             else
             {
                 verticalBlocks[(int) child.transform.localPosition.y - 1,
                     Math.Abs((int) child.transform.localPosition.x)] = child;
-                //Destroy(child.transform.GetChild(0).gameObject);
             }
         }
     }
