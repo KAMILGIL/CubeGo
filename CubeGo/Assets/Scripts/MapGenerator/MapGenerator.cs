@@ -31,12 +31,19 @@ public class MapGenerator : MonoBehaviour
         layers[0].AddPlatform(CreatePlatform(prefabManager.GetPrefab(newPlatformPrefabController.platformData), Vector3.zero));
     }
 
+    public void InitMap()
+    {
+        playerController.currentPlatform = layers[0].platforms[0];
+        CreateNewLayer(layers[0].platforms[0]);
+        AddRightPlatforms();
+        AddRightPlatforms();
+        AddLeftPlatforms();
+        AddLeftPlatforms();
+    }
+
     private void Update()
     {
         int currentLayer = FindCurrentLayer(playerController.currentPlatform), distantLayersAmount = 0;
-
-        print("begin");
-        print(Math.Abs(layers[0].height.y - playerController.transform.position.y));
 
         for (int layerIndex = 0; layerIndex < layers.Count; layerIndex++)
         {
@@ -146,7 +153,6 @@ public class MapGenerator : MonoBehaviour
         
         for (int layerIndex = 0; layerIndex < layers.Count; layerIndex++)
         {
-            print(layers[layerIndex].platforms.Count);
             newPosition = layers[layerIndex].GetFirstPlatformPosition() + Vector3.left * 10;
             if (Math.Abs(newPosition.x - playerController.currentPlatform.transform.position.x) > visionVector.x)
             {

@@ -33,14 +33,13 @@ public class PrefabManager : MonoBehaviour
         {
             HandlePrefab(i);
         }
-        print(keys);
     }
 
     private void HandlePrefab(int index)
     {
         prefabs[index].GetComponent<PlatformController>().SetPlatformData();
         string key = prefabs[index].GetComponent<PlatformController>().platformData.ToString();
-        print(key);
+        
         if (!keys.Contains(key)) 
         {
             data[key] = new List<int>();
@@ -55,13 +54,11 @@ public class PrefabManager : MonoBehaviour
         if (conditions.isAny) // any size and any types of both block arrays 
         {
             string randomKey = keys[Random.Range(0, keys.Count)];
-            print(randomKey);
             return prefabs[data[randomKey][0]]; // must be random index, not only zero 
         }
         // give other platform with same conditions
         
         string key = conditions.ToString();
-        print(key);
         return prefabs[data[key][0]]; // might be not only zero 
     }
 }

@@ -30,12 +30,14 @@ public class PlatformController : MonoBehaviour
         horizontalBlocks = new GameObject[(int)size.z, (int)size.x];
         verticalBlocks = new GameObject[(int)size.y, (int)size.x];
 
-        GameObject child; 
-        
+        GameObject child;
+
         for (int i = 0; i < transform.childCount; i++)
         {
             child = transform.GetChild(i).gameObject;
-
+            
+            child.GetComponent<BlockController>().SetSkin("Winter");
+            
             if (child.transform.localPosition.y == 0)
             {
                 horizontalBlocks[(int)child.transform.localPosition.z, Math.Abs((int)child.transform.localPosition.x)] = child;

@@ -244,13 +244,10 @@ public class PlayerController : MonoBehaviour
 
         if (!AbsoluteRotationComparison(transform.localEulerAngles, targetRotation, 1f))
         {
-            print(transform.localEulerAngles.x);
-            print(targetRotation.x);
             if (Math.Abs(transform.localEulerAngles.x - 270) <= 1f)
             {
                 targetRotation.x = 360f;
             }
-            print(targetRotation.x);
             clip.SetCurve("", typeof(Transform), "localEulerAngels.x", GetCurve(transform.localEulerAngles.x, targetRotation.x));
             clip.SetCurve("", typeof(Transform), "localEulerAngels.y", GetCurve(transform.localEulerAngles.y, targetRotation.y));
             clip.SetCurve("", typeof(Transform), "localEulerAngels.z", GetCurve(transform.localEulerAngles.z, targetRotation.z));

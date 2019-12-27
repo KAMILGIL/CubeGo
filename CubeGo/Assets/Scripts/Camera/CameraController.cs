@@ -22,7 +22,7 @@ public class CameraController : MonoBehaviour
     {
         if (!PlayerSmartSettings.isPlainMode)
         {
-            transform.position = new Vector3(3, 10, -10);
+            transform.position = new Vector3(5, 20, -20);
         }
         
         playerController = player.GetComponent<PlayerController>();
@@ -36,6 +36,7 @@ public class CameraController : MonoBehaviour
         mapGenerator = gameObject.GetComponent<MapGenerator>();
 
         mapGenerator.playerController = playerController;
+        mapGenerator.InitMap();
         playerController.mapGenerator = mapGenerator;
 
         camera = GetComponent<Camera>(); 
@@ -45,8 +46,9 @@ public class CameraController : MonoBehaviour
     {
         if (!movingAnimation.isPlaying)
         {
-            //transform.position += speed * Time.deltaTime;
+            transform.position += speed * Time.deltaTime;
         }
+
 
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -91,8 +93,8 @@ public class CameraController : MonoBehaviour
         clip.name = "movingAnimation";
         clip.legacy = true;
         clip.SetCurve("", typeof(Transform), "localPosition.x", SetMovingAnimationCurve(transform.localPosition.x, target.x));
-        clip.SetCurve("", typeof(Transform), "localPosition.y", SetMovingAnimationCurve(transform.localPosition.y, target.y));
         clip.SetCurve("", typeof(Transform), "localPosition.z", SetMovingAnimationCurve(transform.localPosition.z, target.z));
+        clip.SetCurve("", typeof(Transform), "localPosition.y", SetMovingAnimationCurve(transform.localPosition.y, target.y));
 
         movingAnimation.AddClip(clip, clip.name);
     }
