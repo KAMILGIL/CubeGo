@@ -18,7 +18,7 @@ public class BlockController : MonoBehaviour
 
     public void SetSkin(string theme)
     {
-        skin = Instantiate(Resources.Load<GameObject>("MapPrefabs/BlockSkins/" + theme + "/" + BlockTypeExtension.ToFriendlyString(blockType)), Vector3.zero, Quaternion.identity);
+        skin = Instantiate(Resources.Load<GameObject>("Textures/BlockSkins/" + theme + "/" + BlockTypeExtension.ToFriendlyString(blockType)), Vector3.zero, Quaternion.identity);
         skin.transform.SetParent(transform, false);
     }
 }
@@ -31,6 +31,7 @@ public enum BlockType
     Plain3, 
     Plain4, 
     Plain5, 
+    Invisible, 
     Car, 
     River, 
     MovingBlocks
@@ -55,6 +56,8 @@ public static class BlockTypeExtension
                 return "Plain4";
             case BlockType.Plain5:
                 return "Plain5";
+            case  BlockType.Invisible:
+                return "Invisible";
             case BlockType.River:
                 return "River";
             case BlockType.Car:

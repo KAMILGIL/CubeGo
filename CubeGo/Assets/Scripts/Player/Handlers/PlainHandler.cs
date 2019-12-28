@@ -75,7 +75,7 @@ public class PlainHandler : MonoBehaviour
                 var deltaVector = touchStartPosition - t.position;
                 print(deltaVector);
 
-                if (Math.Abs(deltaVector.x) >= 0.8f && Math.Abs(deltaVector.y) >= 0.8f)
+                if (Math.Abs(deltaVector.x) >= 1.4f && Math.Abs(deltaVector.y) >= 1.4f)
                 {
                     if (deltaVector.x < 0 && deltaVector.y > 0)
                     {
