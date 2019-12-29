@@ -14,16 +14,14 @@ public class PrefabManager : MonoBehaviour
     public Dictionary<string, List<int>> data = new Dictionary<string, List<int>>();
     public List<string> keys = new List<string>();
 
-    private string[] names = new string[]{"P(10-4-6)", "P(10-7-8)", "P(10-10-10)", "P(10-10-10)Cars"};
+    private string[] names = new string[]{"P(10-4-6)", "P(10-10-10)Cars"};
 
     private void LoadPrefabs()
     {
-        print(names);
         foreach (string name in names)
         {
             prefabs.Add(Resources.Load<GameObject>("MapPrefabs/Platforms/" + name));
         }
-        print(prefabs.Count);
     }
 
     public void HandlePrefabs()

@@ -54,7 +54,7 @@ public class SkinAnimationController : MonoBehaviour
         keys = new Keyframe[3];
         keys[0] = new Keyframe(0.0f, initPosition.y);
         keys[1] = new Keyframe(PlayerSmartSettings.jumpingTime / 2f, topYPosition);
-        keys[2] = new Keyframe(PlayerSmartSettings.jumpingTime, initPosition.y);
+        keys[2] = new Keyframe(PlayerSmartSettings.jumpingTime * 0.9f, initPosition.y);
         curve = new AnimationCurve(keys);
         clip.SetCurve("", typeof(Transform), "localPosition.y", curve);
 
@@ -63,7 +63,7 @@ public class SkinAnimationController : MonoBehaviour
 
     public void PlayJumpingAnimation()
     {
-        SetJumpingAnimationCurve(-0.1f);
+        SetJumpingAnimationCurve(-0.22f);
         jumpingAnimation.Play("jumpAnimation");
     }
     

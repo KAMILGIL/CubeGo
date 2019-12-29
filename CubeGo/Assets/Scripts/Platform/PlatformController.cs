@@ -15,6 +15,8 @@ public class PlatformController : MonoBehaviour
     
     public GameObject[,] horizontalBlocks, verticalBlocks;
 
+    public List<Tuple<int, int>> horizontalRiverBlockIndexes = new List<Tuple<int, int>>();
+
     public void SetPlatformData()
     {
         platformData = new PlatformData(horizontalType, verticalType, size);
@@ -35,19 +37,36 @@ public class PlatformController : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             child = transform.GetChild(i).gameObject;
+
+            var childController = child.GetComponent<BlockController>();
             
-            child.GetComponent<BlockController>().SetSkin("Winter");
+            childController.SetSkin("Winter");
+            
             
             if (child.transform.localPosition.y == 0)
             {
                 horizontalBlocks[(int)child.transform.localPosition.z, Math.Abs((int)child.transform.localPosition.x)] = child;
+                if (childController.blockType == BlockType.River && Math.Abs((int) child.transform.localPosition.x) == 9)
+                {
+                    horizontalRiverBlockIndexes.Add(new Tuple<int, int>(Math.Abs((int)(int)child.transform.localPosition.z), Math.Abs((int)child.transform.localPosition.x)));
+                }
             }
             else
             {
                 verticalBlocks[(int) child.transform.localPosition.y - 1,
                     Math.Abs((int) child.transform.localPosition.x)] = child;
+                if (childController.blockType == BlockType.River && Math.Abs((int) child.transform.localPosition.x) == 9)
+                {
+                    horizontalRiverBlockIndexes.Add(new Tuple<int, int>(Math.Abs((int)(int)child.transform.localPosition.z), Math.Abs((int)child.transform.localPosition.x)));
+                }
             }
         }
+
+        var platformObjectController = GetComponent<PlatformObjectController>();
+
+        platformObjectController.horizontalBlocks = horizontalBlocks;
+        platformObjectController.verticalBlocks = verticalBlocks;
+        platformObjectController.horizontalRiverBlockIndexes = horizontalRiverBlockIndexes;
     }
 
     public void DestroySelf()

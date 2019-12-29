@@ -62,6 +62,14 @@ public class MapGenerator : MonoBehaviour
         {
             layers.RemoveAt(i);
         }
+
+        for (int i = 0; i < layers.Count; i++)
+        {
+            if (Input.GetKey(KeyCode.L))
+            {
+                layers[i].platforms[0].GetComponent<PlatformObjectController>().RunManagement();
+            }
+        }
     }
 
     private void CreateNewLayer(GameObject currentPlatform)

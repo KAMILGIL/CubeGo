@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     {
         if (bottomCollider.selectedCube)
         {
-            currentPlatform = bottomCollider.GetPlatform();
+            currentPlatform = bottomCollider.selectedPlatform;
         }
     }
 
@@ -67,8 +67,13 @@ public class PlayerController : MonoBehaviour
             return;
         }
         
-        mapGenerator.MovedForward(bottomCollider.GetPlatform());
+        mapGenerator.MovedForward(bottomCollider.selectedPlatform);
         skinAnimationController.LookForward();
+
+        if (forwardBottomCollider.selectedCube)
+        {
+            print("begin " + forwardBottomCollider.selectedCube.ToString());
+        }
         
         if (!forwardCollider.isCollising && forwardBottomCollider.isCollising)
         {
@@ -103,7 +108,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         
-        mapGenerator.MovedBackward(bottomCollider.GetPlatform());
+        mapGenerator.MovedBackward(bottomCollider.selectedPlatform);
         skinAnimationController.LookBack();
 
         if (!backCollider.isCollising && backBottomCollider.isCollising)
@@ -138,7 +143,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         
-        mapGenerator.MovedRight(bottomCollider.GetPlatform());
+        mapGenerator.MovedRight(bottomCollider.selectedPlatform);
         skinAnimationController.LookRight();
         
         if (!rightCollider.isCollising && rightBottomCollider.isCollising)
@@ -173,7 +178,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         
-        mapGenerator.MovedLeft(bottomCollider.GetPlatform());
+        mapGenerator.MovedLeft(bottomCollider.selectedPlatform);
         skinAnimationController.LookLeft();
         
         if (!leftCollider.isCollising && leftBottomCollider.isCollising)
