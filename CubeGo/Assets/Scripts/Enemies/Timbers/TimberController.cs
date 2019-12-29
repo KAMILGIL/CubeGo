@@ -7,14 +7,12 @@ public class TimberController : MonoBehaviour
 {
     public int timberLength;
 
-    private GameObject colliderPrefab, skin;
+    private GameObject skin;
 
     private List<GameObject> colliders = new List<GameObject>(); 
     
     private void Start()
     {
-        colliderPrefab = Resources.Load<GameObject>("Objects/PlayerCollider");
-        print(colliderPrefab);
         CreateBlocks("Winter");
     }
 
@@ -46,12 +44,9 @@ public class TimberController : MonoBehaviour
         
         skin = Instantiate(Resources.Load<GameObject>("Textures/" + theme + "/EnemySkins/" + timberType), Vector3.zero, Quaternion.identity);
         skin.transform.SetParent(transform, false);
-        
-        
-        for (int i = 0; i < timberLength; i++)
-        {
-            colliders.Add(Instantiate(colliderPrefab, Vector3.right * i + Vector3.left * i * 0.2f, Quaternion.identity));
-            colliders[i].transform.SetParent(transform, false);
-        }
+
+        var collider = gameObject.AddComponent<BoxCollider>();
+        collider.transform.localScale = new Vector3(timberLength, 1, 1);
+        collider.transform.position = Vector3.right * timberLength; 
     }
 }

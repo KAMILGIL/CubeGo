@@ -35,6 +35,7 @@
             <e p="PrefabManager.cs" t="Include" />
           </e>
           <e p="Platform" t="Include">
+            <e p="BlockCollider.cs" t="Include" />
             <e p="BlockController.cs" t="Include" />
             <e p="PlatformController.cs" t="Include" />
             <e p="PlatformObjectController.cs" t="Include" />
