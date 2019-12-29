@@ -41,7 +41,8 @@ public class PlatformController : MonoBehaviour
             var childController = child.GetComponent<BlockController>();
             
             childController.SetSkin("Winter");
-            
+
+            child.GetComponent<BlockColliderController>().platform = gameObject;
             
             if (child.transform.localPosition.y == 0)
             {

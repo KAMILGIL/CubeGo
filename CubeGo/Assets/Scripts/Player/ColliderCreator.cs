@@ -14,7 +14,7 @@ public class ColliderCreator : MonoBehaviour
         backCollider, backBottomCollider,
         bottomCollider;
 
-    private ColliderController forwardData, forwardBottomData,
+    private PlayerColliderController forwardData, forwardBottomData,
         rightData, rightBottomData,
         leftData, leftBottomData,
         backData, backBottomData,
@@ -48,46 +48,46 @@ public class ColliderCreator : MonoBehaviour
         leftCollider = Instantiate(colliderPrefab, Vector3.left, Quaternion.identity);
         leftCollider.name = "LeftCollider";
         leftCollider.transform.SetParent(transform, false);
-        leftData = leftCollider.GetComponent<ColliderController>();
+        leftData = leftCollider.GetComponent<PlayerColliderController>();
 
         leftBottomCollider = Instantiate(colliderPrefab, Vector3.left + Vector3.down, Quaternion.identity);
         leftBottomCollider.name = "LeftBottomCollider";
         leftBottomCollider.transform.SetParent(transform, false);
-        leftBottomData = leftBottomCollider.GetComponent<ColliderController>();
+        leftBottomData = leftBottomCollider.GetComponent<PlayerColliderController>();
 
         forwardCollider = Instantiate(colliderPrefab, Vector3.forward, Quaternion.identity);
         forwardCollider.name = "ForwardCollider";
         forwardCollider.transform.SetParent(transform, false);
-        forwardData = forwardCollider.GetComponent<ColliderController>();
+        forwardData = forwardCollider.GetComponent<PlayerColliderController>();
 
         forwardBottomCollider = Instantiate(colliderPrefab, Vector3.forward + Vector3.down, Quaternion.identity);
         forwardBottomCollider.name = "ForwardBottomCollider";
         forwardBottomCollider.transform.SetParent(transform, false);
-        forwardBottomData = forwardBottomCollider.GetComponent<ColliderController>();
+        forwardBottomData = forwardBottomCollider.GetComponent<PlayerColliderController>();
 
         rightCollider = Instantiate(colliderPrefab, Vector3.right, Quaternion.identity);
         rightCollider.name = "RightCollider";
         rightCollider.transform.SetParent(transform, false);
-        rightData = rightCollider.GetComponent<ColliderController>();
+        rightData = rightCollider.GetComponent<PlayerColliderController>();
 
         rightBottomCollider = Instantiate(colliderPrefab, Vector3.right + Vector3.down, Quaternion.identity);
         rightBottomCollider.name = "RightBottomCollider";
         rightBottomCollider.transform.SetParent(transform, false);
-        rightBottomData = rightBottomCollider.GetComponent<ColliderController>();
+        rightBottomData = rightBottomCollider.GetComponent<PlayerColliderController>();
 
         backCollider = Instantiate(colliderPrefab, Vector3.back, Quaternion.identity);
         backCollider.name = "BackCollider";
         backCollider.transform.SetParent(transform, false);
-        backData = backCollider.GetComponent<ColliderController>();
+        backData = backCollider.GetComponent<PlayerColliderController>();
 
         backBottomCollider = Instantiate(colliderPrefab, Vector3.back + Vector3.down, Quaternion.identity);
         backBottomCollider.name = "BackBottomCollider";
         backBottomCollider.transform.SetParent(transform, false);
-        backBottomData = backBottomCollider.GetComponent<ColliderController>();
+        backBottomData = backBottomCollider.GetComponent<PlayerColliderController>();
 
         bottomCollider = Instantiate(colliderPrefab, Vector3.down, Quaternion.identity);
         bottomCollider.name = "BottomCollider";
         bottomCollider.transform.SetParent(transform, false);
-        bottomData = bottomCollider.GetComponent<ColliderController>();
+        bottomData = bottomCollider.GetComponent<PlayerColliderController>();
     }
 }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3259408597985851711}
   - component: {fileID: 5238877492168367751}
   - component: {fileID: 213885335768729746}
+  - component: {fileID: 6340195484976699053}
   m_Layer: 0
   m_Name: Plain1
   m_TagString: Block
@@ -61,6 +62,20 @@ MonoBehaviour:
   platform: {fileID: 0}
   skin: {fileID: 0}
   blockType: 1
+  isCollising: 0
+--- !u!114 &6340195484976699053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5063962467119744480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f9db81e2afe4464da0356ccd3a79946, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  platform: {fileID: 0}
 --- !u!1 &8653855513614141817
 GameObject:
   m_ObjectHideFlags: 0

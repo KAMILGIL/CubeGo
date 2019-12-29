@@ -8,9 +8,11 @@ using Random = UnityEngine.Random;
 
 public class PlatformObjectController : MonoBehaviour
 {
-    public List<Tuple<int, int>> horizontalRiverBlockIndexes, verticalRiverBlocksIndexes;
+    public List<Tuple<int, int>> horizontalRiverBlockIndexes = new List<Tuple<int, int>>(), verticalRiverBlocksIndexes;
     
     public GameObject[,] horizontalBlocks, verticalBlocks;
+
+    public List<GameObject> timbers = new List<GameObject>();
 
     public float deltaTime;
     
@@ -35,20 +37,24 @@ public class PlatformObjectController : MonoBehaviour
     {
         foreach (var index in horizontalRiverBlockIndexes)
         {
-            bool canSpawn = true;
-            for (int i = 0; i < 4; i++)
+            bool canSpawn;
+            RaycastHit hit; 
+            
+            if (Physics.Raycast(horizontalBlocks[index.Item1, index.Item2].transform.position, Vector3.right, out hit, Random.Range(8, 15)))
             {
-                if (horizontalBlocks[index.Item1, index.Item2 - i].GetComponent<BlockController>().isCollising)
-                {
-                    canSpawn = false;
-                }
+                canSpawn = false; 
+            }
+            else
+            {
+                canSpawn = true; 
             }
 
             if (canSpawn)
             {
                 print(horizontalBlocks[index.Item1, index.Item2].transform.position);
-                Instantiate(timberPrefabs[Random.Range(0, timberPrefabs.Count)],
+                GameObject timber = Instantiate(timberPrefabs[Random.Range(0, timberPrefabs.Count)],
                     horizontalBlocks[index.Item1, index.Item2].transform.position, Quaternion.identity);
+                timber.GetComponent<TimberController>().platform = gameObject;
             }
         }
     }

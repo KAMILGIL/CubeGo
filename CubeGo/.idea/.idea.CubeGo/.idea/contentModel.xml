@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\gamer\.Rider2019.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\gamer\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_CubeGo.-370458203.00" t="ExcludeRecursive" />
-    <e p="E:\UNITYPROJECTS\CubeGo\CubeGo" t="IncludeRecursive">
+    <e p="$USER_HOME$/Library/Caches/Rider2019.3/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2019.3/resharper-host/local/Transient/ReSharperHost/v193/SolutionCaches/_CubeGo.1251773765.00" t="ExcludeRecursive" />
+    <e p="$PROJECT_DIR$" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
@@ -35,7 +35,7 @@
             <e p="PrefabManager.cs" t="Include" />
           </e>
           <e p="Platform" t="Include">
-            <e p="BlockCollider.cs" t="Include" />
+            <e p="BlockColliderController.cs" t="Include" />
             <e p="BlockController.cs" t="Include" />
             <e p="PlatformController.cs" t="Include" />
             <e p="PlatformObjectController.cs" t="Include" />
@@ -43,7 +43,7 @@
           <e p="Player" t="Include">
             <e p="ColliderCreator.cs" t="Include" />
             <e p="Controllers" t="Include">
-              <e p="ColliderController.cs" t="Include" />
+              <e p="PlayerColliderController.cs" t="Include" />
               <e p="PlayerController.cs" t="Include" />
               <e p="SkinAnimationController.cs" t="Include" />
             </e>
@@ -63,7 +63,7 @@
       <e p="CubeGo.sln" t="IncludeFlat" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />
-      <e p="Temp\bin" t="ExcludeRecursive" />
+      <e p="Temp/bin" t="ExcludeRecursive" />
     </e>
   </component>
 </project>

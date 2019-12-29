@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8908234712654699423}
   - component: {fileID: 9138000013243143411}
+  - component: {fileID: 8782292602080780083}
   m_Layer: 0
   m_Name: RiverBlock
   m_TagString: Block
@@ -44,10 +45,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 569fb032710304555b125e5304b65488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platform: {fileID: 0}
   skin: {fileID: 0}
   blockType: 6
-  isCollising: 0
+--- !u!114 &8782292602080780083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4112130757474553821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f9db81e2afe4464da0356ccd3a79946, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  platform: {fileID: 0}
 --- !u!1 &6885162902338497354
 GameObject:
   m_ObjectHideFlags: 0

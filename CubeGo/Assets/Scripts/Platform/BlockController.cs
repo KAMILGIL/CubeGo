@@ -5,38 +5,9 @@ using UnityEngine;
 
 public class BlockController : MonoBehaviour
 {
-    public GameObject platform;
-
     public GameObject skin; 
     
     public BlockType blockType;
-
-    public bool isCollising;
-
-    private void OnTriggerEnter(Collider other)
-    {
-        isCollising = true;
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        isCollising = false;
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        isCollising = true;
-    }
-
-    private void Start()
-    {
-        platform = transform.parent.gameObject;
-    }
-
-    public void InitPlatform()
-    {
-        platform = transform.parent.gameObject;
-    }
 
     public void SetSkin(string theme)
     {

@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject platform;
 
-    public ColliderController leftCollider, leftBottomCollider,
+    public PlayerColliderController leftCollider, leftBottomCollider,
         forwardCollider, forwardBottomCollider,
         rightCollider, rightBottomCollider,
         backCollider, backBottomCollider,
@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     private PlainHandler plainHanlder;
     private ComplicatedHandler complicatedHandler;
     
-    private Vector3 target, targetRotation, wallUp = new Vector3(-90f, 0, 0), leftWall = new Vector3(0f, 0f, -90f), floor = Vector3.zero;
+    private Vector3 target, targetRotation, wallUp = new Vector3(-90f, 0, 0), leftWall = new Vector3(0f, 0f, -90f), floor = Vector3.zero, speed;
 
     public Animation movingAnimation;
 
@@ -38,7 +38,12 @@ public class PlayerController : MonoBehaviour
     {
         if (bottomCollider.selectedCube)
         {
-            currentPlatform = bottomCollider.selectedPlatform;
+            currentPlatform = bottomCollider.GetPlatform();
+        }
+
+        if (!movingAnimation.isPlaying)
+        {
+            transform.position += speed * Time.deltaTime;
         }
     }
 
@@ -67,18 +72,12 @@ public class PlayerController : MonoBehaviour
             return;
         }
         
-        mapGenerator.MovedForward(bottomCollider.selectedPlatform);
+        mapGenerator.MovedForward(bottomCollider.GetPlatform());
         skinAnimationController.LookForward();
 
-        if (forwardBottomCollider.selectedCube)
-        {
-            print("begin " + forwardBottomCollider.selectedCube.ToString());
-        }
-        
         if (!forwardCollider.isCollising && forwardBottomCollider.isCollising)
         {
-            target = forwardBottomCollider.selectedCube.transform.position + transform.position -
-                     bottomCollider.selectedCube.transform.position;
+            target = forwardBottomCollider.selectedCube.transform.position + GetDeltaDirectionVectorToCurrentCube() + CountTargetDelta(forwardBottomCollider);
             // rotation doesn't change
             InitMovement();
             return; 
@@ -108,13 +107,12 @@ public class PlayerController : MonoBehaviour
             return;
         }
         
-        mapGenerator.MovedBackward(bottomCollider.selectedPlatform);
+        mapGenerator.MovedBackward(bottomCollider.GetPlatform());
         skinAnimationController.LookBack();
 
         if (!backCollider.isCollising && backBottomCollider.isCollising)
         {
-            target = backBottomCollider.selectedCube.transform.position + transform.position -
-                     bottomCollider.selectedCube.transform.position;
+            target = backBottomCollider.selectedCube.transform.position + GetDeltaDirectionVectorToCurrentCube() + CountTargetDelta(backBottomCollider);
             InitMovement();
             return;
         }
@@ -143,13 +141,12 @@ public class PlayerController : MonoBehaviour
             return;
         }
         
-        mapGenerator.MovedRight(bottomCollider.selectedPlatform);
+        mapGenerator.MovedRight(bottomCollider.GetPlatform());
         skinAnimationController.LookRight();
         
         if (!rightCollider.isCollising && rightBottomCollider.isCollising)
         {
-            target = rightBottomCollider.selectedCube.transform.position + transform.position -
-                     bottomCollider.selectedCube.transform.position;
+            target = rightBottomCollider.selectedCube.transform.position + GetDeltaDirectionVectorToCurrentCube() + CountTargetDelta(rightBottomCollider);
             InitMovement();
             return;
         }
@@ -178,13 +175,12 @@ public class PlayerController : MonoBehaviour
             return;
         }
         
-        mapGenerator.MovedLeft(bottomCollider.selectedPlatform);
+        mapGenerator.MovedLeft(bottomCollider.GetPlatform());
         skinAnimationController.LookLeft();
         
         if (!leftCollider.isCollising && leftBottomCollider.isCollising)
         {
-            target = leftBottomCollider.selectedCube.transform.position + transform.position -
-                     bottomCollider.selectedCube.transform.position;
+            target = leftBottomCollider.selectedCube.transform.position + GetDeltaDirectionVectorToCurrentCube() + CountTargetDelta(leftBottomCollider);
             InitMovement();
             return;
         }
@@ -261,6 +257,23 @@ public class PlayerController : MonoBehaviour
         movingAnimation.AddClip(clip, clip.name);
 
         movingAnimation.Play("movingAnimation");
+    }
+
+    private Vector3 GetDeltaDirectionVectorToCurrentCube()
+    {
+        if (AbsoluteRotationComparison(transform.localEulerAngles, wallUp, 2f))
+        {
+            return Vector3.back;
+        }
+
+        return Vector3.up;
+    }
+
+    private Vector3 CountTargetDelta(PlayerColliderController controller)
+    {
+        BlockColliderController blockColliderController = controller.selectedCube.GetComponent<BlockColliderController>();
+        speed = blockColliderController.speed;
+        return blockColliderController.speed * PlayerSmartSettings.jumpingTime;
     }
 
     private bool CompareVectors(Vector3 vector1, Vector3 vector2, float epsilon)

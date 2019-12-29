@@ -2,23 +2,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class TimberController : MonoBehaviour
 {
     public int timberLength;
 
-    private GameObject skin;
+    public GameObject platform;
 
-    private List<GameObject> colliders = new List<GameObject>(); 
-    
+    public Vector3 speed = Vector3.right * 2f; // is speed of the timber
+
+    private GameObject skin, colliderPrefab;
+
+    private List<GameObject> colliders = new List<GameObject>();
+
     private void Start()
     {
+        colliderPrefab = Resources.Load<GameObject>("CustomColliders/BlockCollider"); 
+        print("colliderPrefab" + colliderPrefab.ToString());
+        
         CreateBlocks("Winter");
     }
 
     private void Update()
     {
-        transform.position += Vector3.right * 0.4f * Time.deltaTime;
+        transform.position += speed * Time.deltaTime;
     }
 
     private void CreateBlocks(string theme)
@@ -37,7 +45,7 @@ public class TimberController : MonoBehaviour
                 timberType = "LargeTimber";
                 break;
             default:
-                timberType = "SmallTimber";
+                timberType = "none";
                 break;
         }
         
@@ -45,8 +53,12 @@ public class TimberController : MonoBehaviour
         skin = Instantiate(Resources.Load<GameObject>("Textures/" + theme + "/EnemySkins/" + timberType), Vector3.zero, Quaternion.identity);
         skin.transform.SetParent(transform, false);
 
-        var collider = gameObject.AddComponent<BoxCollider>();
-        collider.transform.localScale = new Vector3(timberLength, 1, 1);
-        collider.transform.position = Vector3.right * timberLength; 
+        for (int i = 0; i < timberLength; i++)
+        {
+            colliders.Add(Instantiate(colliderPrefab, Vector3.right * i, Quaternion.identity));
+            colliders[i].transform.SetParent(transform, false);
+            colliders[i].GetComponent<BlockColliderController>().platform = platform;
+            colliders[i].GetComponent<BlockColliderController>().speed = speed; 
+        }
     }
 }
