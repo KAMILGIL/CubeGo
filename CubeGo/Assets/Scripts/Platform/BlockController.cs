@@ -59,9 +59,9 @@ public static class BlockTypeExtension
             case BlockType.MovingBlocks:
                 return "MovingBlocks";
             case BlockType.RoadLight:
-                return "Road1";
+                return "RoadLight";
             case BlockType.RoadDark:
-                return "Road1";
+                return "RoadDark";
             case  BlockType.Arrow:
                 return "Arrow";
             case BlockType.Spikes:

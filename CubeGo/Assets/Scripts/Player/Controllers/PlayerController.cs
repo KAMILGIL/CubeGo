@@ -9,9 +9,7 @@ using Vector3 = UnityEngine.Vector3;
 public class PlayerController : MonoBehaviour
 {
     public CameraController cameraController;
-
-    public GameObject platform;
-
+    
     public PlayerColliderController leftCollider, leftBottomCollider,
         forwardCollider, forwardBottomCollider,
         rightCollider, rightBottomCollider,
@@ -28,19 +26,13 @@ public class PlayerController : MonoBehaviour
     private PlainHandler plainHanlder;
     private ComplicatedHandler complicatedHandler;
     
-    private Vector3 target, targetRotation, wallUp = new Vector3(-90f, 0, 0), leftWall = new Vector3(0f, 0f, -90f), floor = Vector3.zero, speed;
-
+    private Vector3 target, targetRotation, wallUp = new Vector3(-90f, 0, 0), leftWall = new Vector3(0f, 0f, -90f), floor = Vector3.zero;
+    public Vector3 speed; 
+    
     public Animation movingAnimation;
-
-    public GameObject currentPlatform;
 
     private void Update()
     {
-        if (bottomCollider.selectedCube)
-        {
-            currentPlatform = bottomCollider.GetPlatform();
-        }
-
         if (!movingAnimation.isPlaying)
         {
             transform.position += speed * Time.deltaTime;
@@ -72,7 +64,6 @@ public class PlayerController : MonoBehaviour
             return;
         }
         
-        mapGenerator.MovedForward(bottomCollider.GetPlatform());
         skinAnimationController.LookForward();
 
         if (!forwardCollider.isCollising && forwardBottomCollider.isCollising)
@@ -91,7 +82,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (!forwardCollider.isCollising && !forwardBottomCollider.isCollising)
+        if (!forwardCollider.isCollising && !forwardBottomCollider.isCollising && AbsoluteRotationComparison(transform.localEulerAngles, wallUp, 1f))
         {
             target = bottomCollider.selectedCube.transform.position + Vector3.up;
             targetRotation = floor;
@@ -107,7 +98,6 @@ public class PlayerController : MonoBehaviour
             return;
         }
         
-        mapGenerator.MovedBackward(bottomCollider.GetPlatform());
         skinAnimationController.LookBack();
 
         if (!backCollider.isCollising && backBottomCollider.isCollising)
@@ -141,7 +131,6 @@ public class PlayerController : MonoBehaviour
             return;
         }
         
-        mapGenerator.MovedRight(bottomCollider.GetPlatform());
         skinAnimationController.LookRight();
         
         if (!rightCollider.isCollising && rightBottomCollider.isCollising)
@@ -161,9 +150,9 @@ public class PlayerController : MonoBehaviour
 
         if (!rightCollider.isCollising && !rightBottomCollider.isCollising)
         {
-            target = bottomCollider.selectedCube.transform.position + Vector3.right; 
-            targetRotation = leftWall;
-            InitMovement();
+            //target = bottomCollider.selectedCube.transform.position + Vector3.right; 
+            //targetRotation = leftWall;
+            //InitMovement();
             return;
         }
     }
@@ -175,7 +164,6 @@ public class PlayerController : MonoBehaviour
             return;
         }
         
-        mapGenerator.MovedLeft(bottomCollider.GetPlatform());
         skinAnimationController.LookLeft();
         
         if (!leftCollider.isCollising && leftBottomCollider.isCollising)
@@ -195,9 +183,9 @@ public class PlayerController : MonoBehaviour
 
         if (!leftCollider.isCollising && !leftBottomCollider.isCollising)
         {
-            target = bottomCollider.selectedCube.transform.position + Vector3.up;
-            targetRotation = floor; 
-            InitMovement();
+            //target = bottomCollider.selectedCube.transform.position + Vector3.up;
+            //targetRotation = floor; 
+            //InitMovement();
             return;
         }
     }

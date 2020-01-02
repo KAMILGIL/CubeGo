@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Block
   - Skin
+  - PlayerCollider
   layers:
   - Default
   - TransparentFX

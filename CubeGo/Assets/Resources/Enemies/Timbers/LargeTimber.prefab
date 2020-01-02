@@ -43,4 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edd76d92452c7d340a3095a8ab1f9a62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timberLength: 3
+  timberLength: 5
+  speed: {x: 2, y: 0, z: 0}

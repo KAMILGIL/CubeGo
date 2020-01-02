@@ -16,10 +16,13 @@ public class CameraController : MonoBehaviour
 
     private Animation movingAnimation;
 
-    private Camera camera; 
+    private Camera camera;
 
     private void Start()
     {
+        
+        camera = GetComponent<Camera>(); 
+        
         if (!PlayerSmartSettings.isPlainMode)
         {
             transform.position = new Vector3(5, 20, -20);
@@ -35,11 +38,9 @@ public class CameraController : MonoBehaviour
 
         mapGenerator = gameObject.GetComponent<MapGenerator>();
 
+        playerController.mapGenerator = mapGenerator;
         mapGenerator.playerController = playerController;
         mapGenerator.InitMap();
-        playerController.mapGenerator = mapGenerator;
-
-        camera = GetComponent<Camera>(); 
     }
 
     private void Update()
@@ -47,8 +48,8 @@ public class CameraController : MonoBehaviour
         if (!movingAnimation.isPlaying)
         {
             transform.position += speed * Time.deltaTime;
+            transform.position += playerController.speed * Time.deltaTime;
         }
-
 
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -93,7 +94,14 @@ public class CameraController : MonoBehaviour
         clip.name = "movingAnimation";
         clip.legacy = true;
         clip.SetCurve("", typeof(Transform), "localPosition.x", SetMovingAnimationCurve(transform.localPosition.x, target.x));
-        clip.SetCurve("", typeof(Transform), "localPosition.z", SetMovingAnimationCurve(transform.localPosition.z, target.z));
+        if (playerController.transform.position.z >= (transform.localPosition- playerDelta).z || true)
+        {
+            clip.SetCurve("", typeof(Transform), "localPosition.z", SetMovingAnimationCurve(transform.localPosition.z, target.z));
+        }
+        else
+        {
+            clip.SetCurve("", typeof(Transform), "localPosition.z", SetMovingAnimationCurve(transform.localPosition.z, transform.localPosition.z + speed.z * PlayerSmartSettings.jumpingTime * 2.5f));
+        }
         clip.SetCurve("", typeof(Transform), "localPosition.y", SetMovingAnimationCurve(transform.localPosition.y, target.y));
 
         movingAnimation.AddClip(clip, clip.name);

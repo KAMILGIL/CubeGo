@@ -2,6 +2,10 @@
 using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using Microsoft.Win32.SafeHandles;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -9,22 +13,132 @@ public class PlatformController : MonoBehaviour
 {
     public Vector3 size;
 
-    public PlatformType horizontalType, verticalType;
-
-    public PlatformData platformData; 
-    
     public GameObject[,] horizontalBlocks, verticalBlocks;
-
-    public List<Tuple<int, int>> horizontalRiverBlockIndexes = new List<Tuple<int, int>>();
-
-    public void SetPlatformData()
-    {
-        platformData = new PlatformData(horizontalType, verticalType, size);
-    }
     
+    public LayerController layer;
+
+    public List<Vector3> riverCoordinates = new List<Vector3>(), 
+        roadCoordinates = new List<Vector3>();
+
+    public Dictionary<Vector3, Vector3> rollEnds = new Dictionary<Vector3, Vector3>();
+
     private void Start()
     {
+        SetSkin();
+    }
+
+    public string GetPlatformCode()
+    {
         GetBlocks();
+        string code = "";
+        
+        for (int i = 0; i < horizontalBlocks.GetLength(0) - 1; i++)
+        {
+            switch (horizontalBlocks[i, 0].GetComponent<BlockController>().blockType)
+            {
+                case BlockType.Empty:
+                    code += "E";
+                    break; 
+                case BlockType.Plain1:
+                    code += "E";
+                    break; 
+                case BlockType.Plain2:
+                    code += "E";
+                    break; 
+                case BlockType.Plain3:
+                    code += "E";
+                    break; 
+                case BlockType.Plain4:
+                    code += "E";
+                    break; 
+                case BlockType.Plain5: 
+                    code += "E"; 
+                    break; 
+                case BlockType.Arrow:
+                    code += "E";
+                    break; 
+                case BlockType.Axe:
+                    code += "E";
+                    break; 
+                case BlockType.Spikes:
+                    code += "E";
+                    break; 
+                case BlockType.Saw:
+                    code += "E";
+                    break; 
+                case BlockType.FallingBlocks:
+                    code += "E";
+                    break; 
+                case BlockType.RoadDark:
+                    code += "R";
+                    break; 
+                case BlockType.RoadLight:
+                    code += "R";
+                    break; 
+                case BlockType.River:
+                    code += "I";
+                    break; 
+                case BlockType.MovingBlocks:
+                    code += "M";
+                    break; 
+            }
+        }
+
+        code += "V"; 
+        
+        for (int i = 0; i < verticalBlocks.GetLength(0) - 1; i++)
+        {
+            switch (verticalBlocks[i, 0].GetComponent<BlockController>().blockType)
+            {
+                case BlockType.Empty:
+                    code += "E";
+                    break; 
+                case BlockType.Plain1:
+                    code += "E";
+                    break; 
+                case BlockType.Plain2:
+                    code += "E";
+                    break; 
+                case BlockType.Plain3:
+                    code += "E";
+                    break; 
+                case BlockType.Plain4:
+                    code += "E";
+                    break; 
+                case BlockType.Plain5: 
+                    code += "E"; 
+                    break; 
+                case BlockType.Arrow:
+                    code += "E";
+                    break; 
+                case BlockType.Axe:
+                    code += "E";
+                    break; 
+                case BlockType.Spikes:
+                    code += "E";
+                    break; 
+                case BlockType.Saw:
+                    code += "E";
+                    break; 
+                case BlockType.FallingBlocks:
+                    code += "E";
+                    break; 
+                case BlockType.RoadDark:
+                    code += "R";
+                    break; 
+                case BlockType.RoadLight:
+                    code += "R";
+                    break; 
+                case BlockType.River:
+                    code += "I";
+                    break; 
+                case BlockType.MovingBlocks:
+                    code += "M";
+                    break; 
+            }
+        }
+
+        return code; 
     }
 
     private void GetBlocks()
@@ -38,98 +152,72 @@ public class PlatformController : MonoBehaviour
         {
             child = transform.GetChild(i).gameObject;
 
-            var childController = child.GetComponent<BlockController>();
-            
-            childController.SetSkin("Winter");
+            HandleChild(child);
+        }
+    }
 
-            child.GetComponent<BlockColliderController>().platform = gameObject;
-            
-            if (child.transform.localPosition.y == 0)
-            {
-                horizontalBlocks[(int)child.transform.localPosition.z, Math.Abs((int)child.transform.localPosition.x)] = child;
-                if (childController.blockType == BlockType.River && Math.Abs((int) child.transform.localPosition.x) == 9)
-                {
-                    horizontalRiverBlockIndexes.Add(new Tuple<int, int>(Math.Abs((int)(int)child.transform.localPosition.z), Math.Abs((int)child.transform.localPosition.x)));
-                }
-            }
-            else
-            {
-                verticalBlocks[(int) child.transform.localPosition.y - 1,
-                    Math.Abs((int) child.transform.localPosition.x)] = child;
-                if (childController.blockType == BlockType.River && Math.Abs((int) child.transform.localPosition.x) == 9)
-                {
-                    horizontalRiverBlockIndexes.Add(new Tuple<int, int>(Math.Abs((int)(int)child.transform.localPosition.z), Math.Abs((int)child.transform.localPosition.x)));
-                }
-            }
+    private bool CheckIfBlockIsRoad(GameObject block)
+    {
+        BlockController blockController = block.GetComponent<BlockController>();
+        if (blockController.blockType == BlockType.RoadDark || blockController.blockType == BlockType.RoadLight)
+        {
+            return true; 
         }
 
-        var platformObjectController = GetComponent<PlatformObjectController>();
+        return false; 
+    }
 
-        platformObjectController.horizontalBlocks = horizontalBlocks;
-        platformObjectController.verticalBlocks = verticalBlocks;
-        platformObjectController.horizontalRiverBlockIndexes = horizontalRiverBlockIndexes;
+    private void HandleChild(GameObject child)
+    {
+        
+        if (child.transform.localPosition.y == 0)
+        {
+            horizontalBlocks[(int)child.transform.localPosition.z, Math.Abs((int)child.transform.localPosition.x)] = child;
+        }
+        else
+        {
+            verticalBlocks[(int) child.transform.localPosition.y - 1, Math.Abs((int) child.transform.localPosition.x)] = child;
+        }
+        
+        var childController = child.GetComponent<BlockController>();
+
+        Vector3 height = new Vector3(0, child.transform.position.y, child.transform.position.z);
+        if (childController.blockType == BlockType.River)
+        {
+            if (!riverCoordinates.Contains(height))
+            {
+                riverCoordinates.Add(height);
+            }
+        }
+        else if (CheckIfBlockIsRoad(child))
+        {
+            if (!roadCoordinates.Contains(height))
+            {
+                roadCoordinates.Add(height);
+            }
+        }
+    }
+
+    public void SetSkin()
+    {
+        GameObject child; 
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            child = transform.GetChild(i).gameObject;
+
+            var childController = child.GetComponent<BlockController>();
+
+            childController.SetSkin("Winter");
+        }
+    }
+
+    private Vector3 LeaveHeight(Vector3 vector)
+    {
+        return new Vector3(0, vector.y, vector.z);
     }
 
     public void DestroySelf()
     {
         Destroy(gameObject);
-    }
-}
-
-public class PlatformData
-{
-    public PlatformType horizontalType = PlatformType.Common, verticalType = PlatformType.Common;
-
-    public Vector3 size;
-
-    public bool isAny = false; 
-
-    public PlatformData(PlatformType horizontalType, PlatformType verticalType, Vector3 size)
-    {
-        this.horizontalType = horizontalType;
-        this.verticalType = verticalType;
-        this.size = size;
-    }
-
-    public PlatformData(bool isAny)
-    {
-        this.isAny = true;
-    }
-
-    public override string ToString()
-    {
-        return size.x.ToString() + "-" + size.y.ToString() + "-" + size.z.ToString() + "-" + PlatformTypeExtension.ToFriendlyString(horizontalType) +
-               PlatformTypeExtension.ToFriendlyString(verticalType);
-    }
-}
-
-public enum PlatformType
-{
-    Common, 
-    Cars, 
-    MovingBlocks, 
-    River, 
-    CarsAndRiver
-}
-
-public static class PlatformTypeExtension
-{
-    public static string ToFriendlyString(this PlatformType me)
-    {
-        switch(me)
-        {
-            case PlatformType.Common:
-                return "Common";
-            case PlatformType.Cars:
-                return "Cars";
-            case PlatformType.MovingBlocks:
-                return "MovingBlocks";
-            case PlatformType.River:
-                return "River";
-            case PlatformType.CarsAndRiver:
-                return "CarsAndRiver";
-            default:
-                return "Get your damn dirty hands off me you FILTHY APE!";
-        }
     }
 }

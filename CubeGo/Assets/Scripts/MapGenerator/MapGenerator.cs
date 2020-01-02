@@ -16,70 +16,31 @@ public class MapGenerator : MonoBehaviour
 
     public PlayerController playerController;
 
-    private List<Layer> layers = new List<Layer>();
+    private List<LayerController> layers = new List<LayerController>();
     
-    private int visibleBlocks = 1;
-    private Vector3 visionVector = new Vector3(23, 12, 0);
+    private Vector3 downVision = new Vector3(0, 12, 0), upVision = new Vector3(0, 9, 0);
+
+    private GameObject layerPrefab;
+    private PlatformController currentPlatform;
 
     private void Start()
     {
         prefabManager = GetComponent<PrefabManager>();
         prefabManager.HandlePrefabs();
-        var newPlatformPrefabController = prefabManager.GetPrefab(new PlatformData(true)).GetComponent<PlatformController>();
 
-        layers.Add(new Layer(Vector3.zero, newPlatformPrefabController.platformData));
-        layers[0].AddPlatform(CreatePlatform(prefabManager.GetPrefab(newPlatformPrefabController.platformData), Vector3.zero));
-    }
-
-    public void InitMap()
-    {
-        playerController.currentPlatform = layers[0].platforms[0];
-        CreateNewLayer(layers[0].platforms[0]);
-        AddRightPlatforms();
-        AddRightPlatforms();
-        AddLeftPlatforms();
-        AddLeftPlatforms();
+        layerPrefab = Resources.Load<GameObject>("Objects/Layer");
     }
 
     private void Update()
     {
-        int currentLayer = FindCurrentLayer(playerController.currentPlatform), distantLayersAmount = 0;
-
-        for (int layerIndex = 0; layerIndex < layers.Count; layerIndex++)
-        {
-            if (Math.Abs(layers[layerIndex].height.y - playerController.transform.position.y) > visionVector.y)
-            {
-                layers[layerIndex].DeleteAllPlatforms();
-                distantLayersAmount += 1;
-            }
-            else
-            {
-                break;
-            }
-        }
-
-        for (int i = 0; i < distantLayersAmount; i++)
-        {
-            layers.RemoveAt(i);
-        }
-
+        int layersToDestroyAmount = 0;
+        currentPlatform = FincCurrentPlatform();
+        
         for (int i = 0; i < layers.Count; i++)
         {
-            layers[i].platforms[0].GetComponent<PlatformObjectController>().RunManagement();
-        }
-    }
-
-    private void CreateNewLayer(GameObject currentPlatform)
-    {
-        Vector3 newLayerCenter;
-        int currentLayer = FindCurrentLayer(currentPlatform), distantLayersAmount = 0;
-
-        for (int layerIndex = 0; layerIndex < layers.Count; layerIndex++)
-        {
-            if (Math.Abs(layers[layerIndex].height.y - layers[currentLayer].height.y) > visionVector.y)
+            if (CheckLayerAtIndex(i))
             {
-                layers[layerIndex].DeleteAllPlatforms();
-                distantLayersAmount += 1;
+                layersToDestroyAmount += 1;
             }
             else
             {
@@ -87,194 +48,98 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < distantLayersAmount; i++)
+        for (int i = 0; i < layersToDestroyAmount; i++)
         {
-            layers.RemoveAt(i);
+            layers.RemoveAt(0);
         }
 
         while (true)
         {
-            if (Math.Abs(layers.Last().height.y - currentPlatform.transform.position.y) > visionVector.y)
+            if (Math.Abs(layers[layers.Count - 1].transform.position.y - currentPlatform.transform.position.y) <= upVision.y)
             {
-                return;
+                layers.Add(CreateLayer());
             }
-
-            GameObject newPlatformPrefab = prefabManager.GetPrefab(new PlatformData(true));
-            PlatformController itsController = newPlatformPrefab.GetComponent<PlatformController>();
-            layers.Add(new Layer(layers.Last().height + GetDeltaVectorFromPlatformPrefab(layers.Last().platforms[0]), itsController.platformData));
-            layers.Last().platforms.Add(CreatePlatform(prefabManager.GetPrefab(itsController.platformData), layers.Last().height + new Vector3(currentPlatform.transform.position.x, 0, 0)));
-            AddRightPlatforms();
-            AddLeftPlatforms();
-        }
-    }
-    
-    private Vector3 GetDeltaVectorFromPlatformPrefab(GameObject platformPrefab)
-    {
-        return GetDeltaVectorFromCornerController(platformPrefab.GetComponent<PlatformController>());
-    }
-
-    private Vector3 GetDeltaVectorFromCornerController(PlatformController controllerController)
-    {
-        return new Vector3(0, controllerController.size.y, controllerController.size.z - 1);
-    }
-
-    private int FindCurrentLayer(GameObject platform)
-    {
-        Vector3 platformHeight = new Vector3(x: 0, y: platform.transform.position.y, z: platform.transform.position.z);
-        for (int layerIndex = 0; layerIndex < layers.Count; layerIndex++)
-        {
-            if (platformHeight.Compare(layers[layerIndex].height, 1))
+            else
             {
-                return layerIndex;
+                break;
             }
         }
-
-        return 0;
     }
 
-    private void AddRightPlatforms()
+    private PlatformController FincCurrentPlatform()
     {
-        Vector3 newPosition; 
+        PlatformController platformController; 
         
-        for (int layerIndex = 0; layerIndex < layers.Count; layerIndex++)
+        for (int i = 0; i < layers.Count; i++)
         {
-            newPosition = layers[layerIndex].GetLastPlatformPosition() + Vector3.right * 10;
-            if (Math.Abs(newPosition.x - playerController.currentPlatform.transform.position.x) > visionVector.x)
+            for (int j = 0; j < layers[i].platforms.Count; j++)
             {
-                continue;
-            }
-            layers[layerIndex].AddPlatform(CreatePlatform(prefabManager.GetPrefab(layers[layerIndex].platformData), newPosition));
-
-            if (Math.Abs(layers[layerIndex].GetFirstPlatformPosition().x - playerController.currentPlatform.transform.position.x) > visionVector.x)
-            {
-                layers[layerIndex].DeleteFirstPlatform();
+                platformController = layers[i].platforms[j];
+                
+                if (CheckPlayerOnPlatform(platformController))
+                {
+                    return platformController;
+                }
             }
         }
+
+        return null; 
     }
-    
-    private void AddLeftPlatforms()
+
+    private bool CheckLayerAtIndex(int index)
     {
-        Vector3 newPosition; 
-        
-        for (int layerIndex = 0; layerIndex < layers.Count; layerIndex++)
+        if (Math.Abs(layers[index].transform.position.y - currentPlatform.transform.position.y) > downVision.y)
         {
-            newPosition = layers[layerIndex].GetFirstPlatformPosition() + Vector3.left * 10;
-            if (Math.Abs(newPosition.x - playerController.currentPlatform.transform.position.x) > visionVector.x)
-            {
-                continue;
-            }
-            layers[layerIndex].InsertPlatform(CreatePlatform(prefabManager.GetPrefab(layers[layerIndex].platformData), newPosition));
-            
-            if (Math.Abs(layers[layerIndex].GetLastPlatformPosition().x - playerController.currentPlatform.transform.position.x) > visionVector.x)
-            {
-                layers[layerIndex].DeleteLastPlatform();
-            }
+            Destroy(layers[index].gameObject);
+            return true; 
         }
+
+        return false;
     }
 
-    public void MovedRight(GameObject platform)
+    public void InitMap()
     {
-        AddRightPlatforms();
+        layers.Add(CreateLayer());
+        layers.Add(CreateLayer());
     }
 
-    public void MovedLeft(GameObject platform)
+    private LayerController CreateLayer()
     {
-        AddLeftPlatforms();
-    } 
-
-    public void MovedForward(GameObject platform)
-    {
-        CreateNewLayer(platform);
-    }
-
-    public void MovedBackward(GameObject platform)
-    {
+        Vector3 position = Vector3.zero;
+        if (layers.Count != 0)
+        {
+            position = layers[layers.Count - 1].top;
+        }
         
+        GameObject layer = Instantiate(layerPrefab, position, Quaternion.identity);
+        LayerController layerController = layer.GetComponent<LayerController>(); 
+        
+        layerController.SetLayer(playerController, prefabManager, GetCurrentSpawnPosition());
+        return layerController;
     }
 
-    private GameObject CreatePlatform(GameObject prefab, Vector3 position)
+    private bool CheckPlayerOnPlatform(PlatformController platformController)
     {
-        return Instantiate(prefab, position, Quaternion.identity);
+        Vector3 platformPosition = platformController.transform.position;
+        Vector3 playerPosition = playerController.transform.position;
+        Vector3 platformSize = platformController.size;
+
+        if (playerPosition.x <= platformPosition.x && playerPosition.x + 10 >= platformPosition.x && 
+            playerPosition.y >= platformPosition.y && playerPosition.y <= platformPosition.y + platformSize.y)
+        {
+            return true; 
+        }
+
+        return false;
+    }
+
+    private Vector3 GetCurrentSpawnPosition()
+    {
+        if (currentPlatform)
+        {
+            return new Vector3(currentPlatform.transform.localPosition.x, 0, 0);
+        }
+
+        return Vector3.zero;
     }
 }
-
-public class Layer
-{
-    public Vector3 height;
-    public PlatformData platformData; // like "10-7-8-Common-Common"
-    public List<GameObject> platforms = new List<GameObject>(); 
-
-    public Layer(Vector3 height, PlatformData platformData)
-    {
-        this.height = height;
-        this.platformData = platformData;
-    }
-
-    public void AddPlatform(GameObject platform)
-    {
-        this.platforms.Add(platform);
-    }
-
-    public void InsertPlatform(GameObject platform)
-    {
-        this.platforms.Insert(0, platform);
-    }
-
-    public void DeleteLastPlatform()
-    {
-        if (platforms.Count == 0)
-        {
-            return;
-        }
-        
-        platforms.Last().GetComponent<PlatformController>().DestroySelf();
-        platforms.RemoveAt(platforms.Count - 1);
-    }
-
-    public void DeleteAllPlatforms()
-    {
-        int count = platforms.Count;
-        
-        for (int i = 0; i < count; i++)
-        {
-            platforms[0].GetComponent<PlatformController>().DestroySelf();
-            platforms.RemoveAt(0);
-        }
-    }
-    
-    public void DeleteFirstPlatform()
-    {
-        if (platforms.Count == 0)
-        {
-            return;
-        }
-        
-        platforms.First().GetComponent<PlatformController>().DestroySelf();
-        platforms.RemoveAt(0);
-    }
-
-    public Vector3 GetFirstPlatformPosition()
-    {
-        if (platforms.Count == 0)
-        {
-            return Vector3.zero;
-        }
-        
-        return platforms[0].transform.position;
-    }
-    
-    public Vector3 GetLastPlatformPosition()
-    {
-        if (platforms.Count == 0)
-        {
-            return Vector3.zero;
-        }
-
-        return platforms[platforms.Count - 1].transform.position;
-    }
-
-    public void GetPlatformInfo()
-    {
-        
-    }
-} 

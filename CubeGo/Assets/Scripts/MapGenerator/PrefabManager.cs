@@ -35,8 +35,7 @@ public class PrefabManager : MonoBehaviour
 
     private void HandlePrefab(int index)
     {
-        prefabs[index].GetComponent<PlatformController>().SetPlatformData();
-        string key = prefabs[index].GetComponent<PlatformController>().platformData.ToString();
+        string key = prefabs[index].GetComponent<PlatformController>().GetPlatformCode();
         
         if (!keys.Contains(key)) 
         {
@@ -47,16 +46,20 @@ public class PrefabManager : MonoBehaviour
         data[key].Add(index);
     }
 
-    public GameObject GetPrefab(PlatformData conditions) // if is equal to 'Any' returns random prefab 
+    public GameObject GetPrefab(string code) // if is equal to 'Any' returns random prefab 
     {
-        if (conditions.isAny) // any size and any types of both block arrays 
-        {
-            string randomKey = keys[Random.Range(0, keys.Count)];
-            return prefabs[data[randomKey][0]]; // must be random index, not only zero 
-        }
-        // give other platform with same conditions
-        
-        string key = conditions.ToString();
+        string key = code;
         return prefabs[data[key][0]]; // might be not only zero 
+    }
+
+    public string GetRandomKey()
+    {
+        return keys[Random.Range(0, keys.Count)];
+    }
+
+    public Vector3 GetSizeForKey(string key)
+    {
+        PlatformController platformController = prefabs[data[key][0]].GetComponent<PlatformController>();
+        return new Vector3(0, platformController.size.y, platformController.size.z);
     }
 }

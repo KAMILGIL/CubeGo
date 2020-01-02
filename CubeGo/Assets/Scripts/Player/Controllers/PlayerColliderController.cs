@@ -10,24 +10,29 @@ public class PlayerColliderController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        isCollising = true;
-        selectedCube = other.gameObject;
+        if (!other.gameObject.CompareTag("PlayerCollider"))
+        {
+            
+            isCollising = true;
+            selectedCube = other.gameObject;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        isCollising = false;
-        selectedCube = null;
+        if (!other.gameObject.CompareTag("PlayerCollider"))
+        {
+            isCollising = false;
+            selectedCube = null;
+        }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        isCollising = true;
-        selectedCube = other.gameObject;
-    }
-
-    public GameObject GetPlatform()
-    {
-        return selectedCube.GetComponent<BlockColliderController>().platform;
+        if (!other.gameObject.CompareTag("PlayerCollider"))
+        {
+            isCollising = true;
+            selectedCube = other.gameObject;
+        }
     }
 }

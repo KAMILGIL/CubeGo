@@ -26,19 +26,24 @@
             <e p="CameraController.cs" t="Include" />
           </e>
           <e p="Enemies" t="Include">
-            <e p="Timbers" t="Include">
-              <e p="TimberController.cs" t="Include" />
-            </e>
+            <e p="CarController.cs" t="Include" />
+            <e p="TimberController.cs" t="Include" />
           </e>
           <e p="MapGenerator" t="Include">
             <e p="MapGenerator.cs" t="Include" />
             <e p="PrefabManager.cs" t="Include" />
           </e>
+          <e p="Objects" t="Include">
+            <e p="LayerController.cs" t="Include" />
+            <e p="RiverController.cs" t="Include" />
+            <e p="RoadController.cs" t="Include" />
+            <e p="RollController.cs" t="Include" />
+          </e>
           <e p="Platform" t="Include">
             <e p="BlockColliderController.cs" t="Include" />
             <e p="BlockController.cs" t="Include" />
+            <e p="EnvironmentController.cs" t="Include" />
             <e p="PlatformController.cs" t="Include" />
-            <e p="PlatformObjectController.cs" t="Include" />
           </e>
           <e p="Player" t="Include">
             <e p="ColliderCreator.cs" t="Include" />
