@@ -10,15 +10,18 @@ using Random = UnityEngine.Random;
 public class EnvironmentController : MonoBehaviour
 {
     private List<PlatformController> platforms;
+    private PlayerController playerController; 
 
     private List<RiverController> rivers = new List<RiverController>();
     private List<RoadController> roads = new List<RoadController>();
+    private List<RollController> rolls = new List<RollController>();
 
     private GameObject riverPrefab, rollPrefab, roadPrefab;
 
-    public void SetEnvironmentController(List<PlatformController> platforms)
+    public void SetEnvironmentController(List<PlatformController> platforms, PlayerController playerController)
     {
         this.platforms = platforms;
+        this.playerController = playerController;
 
         riverPrefab = Resources.Load<GameObject>("Objects/River");
         rollPrefab = Resources.Load<GameObject>("Objects/Roll");
@@ -28,21 +31,24 @@ public class EnvironmentController : MonoBehaviour
         {
             rivers.Add(Instantiate(riverPrefab, height, Quaternion.identity).GetComponent<RiverController>());
             rivers.Last().transform.SetParent(transform, false);
-            rivers.Last().SetRiver(this.platforms, GetRandomRiverSpeed());
+            rivers.Last().SetRiver(this.platforms, GetRandomRiverSpeed(), playerController);
         }
 
         foreach (Vector3 height in platforms.First().roadCoordinates)
         {
             roads.Add(Instantiate(roadPrefab, height, Quaternion.identity).GetComponent<RoadController>());
             roads.Last().transform.SetParent(transform, false); 
-            roads.Last().SetRoad(this.platforms, GetRandomRoadSpeed());
+            roads.Last().SetRoad(this.platforms, GetRandomRoadSpeed(), playerController);
+        }
+
+        foreach (Roll rollData in platforms.First().rollData)
+        {
+            rolls.Add(Instantiate(rollPrefab, rollData.center, Quaternion.identity).GetComponent<RollController>());
+            rolls.Last().transform.SetParent(transform, false);
+            rolls.Last().SetRoll(rollData.center, rollData.length, playerController, platforms);
         }
     }
-
-    private void Update()
-    {
-    }
-
+    
     private Vector3 GetRandomRiverSpeed()
     {
         if (Random.Range(0, 2) == 0)

@@ -76,6 +76,10 @@ public class PlayerController : MonoBehaviour
 
         if (forwardCollider.isCollising)
         {
+            if (forwardCollider.selectedCube.GetComponent<BlockColliderController>().speed.magnitude > 0)
+            {
+                return; 
+            }
             target = forwardCollider.selectedCube.transform.position + Vector3.back; 
             targetRotation = wallUp;
             InitMovement();
@@ -84,6 +88,10 @@ public class PlayerController : MonoBehaviour
 
         if (!forwardCollider.isCollising && !forwardBottomCollider.isCollising && AbsoluteRotationComparison(transform.localEulerAngles, wallUp, 1f))
         {
+            if (bottomCollider.selectedCube.GetComponent<BlockColliderController>().speed.magnitude > 0)
+            {
+                return; 
+            }
             target = bottomCollider.selectedCube.transform.position + Vector3.up;
             targetRotation = floor;
             InitMovement();
@@ -109,6 +117,10 @@ public class PlayerController : MonoBehaviour
 
         if (backCollider.isCollising)
         {
+            if (backCollider.selectedCube.GetComponent<BlockColliderController>().speed.magnitude > 0)
+            {
+                return;
+            }
             target = backCollider.selectedCube.transform.position + Vector3.up;
             targetRotation = floor;
             InitMovement();
@@ -117,6 +129,10 @@ public class PlayerController : MonoBehaviour
 
         if (!backCollider.isCollising && !backBottomCollider.isCollising)
         {
+            if (bottomCollider.selectedCube.GetComponent<BlockColliderController>().speed.magnitude > 0)
+            {
+                return;
+            }
             target = bottomCollider.selectedCube.transform.position + Vector3.back;
             targetRotation = wallUp;
             InitMovement();
@@ -142,6 +158,10 @@ public class PlayerController : MonoBehaviour
 
         if (rightCollider.isCollising)
         {
+            if (rightCollider.selectedCube.GetComponent<BlockColliderController>().speed.magnitude > 0)
+            {
+                return;
+            }
             target = rightCollider.selectedCube.transform.position + Vector3.up;
             targetRotation = floor; 
             InitMovement();
@@ -175,6 +195,10 @@ public class PlayerController : MonoBehaviour
 
         if (leftCollider.isCollising)
         {
+            if (leftCollider.selectedCube.GetComponent<BlockColliderController>().speed.magnitude > 0)
+            {
+                return;
+            }
             target = leftCollider.selectedCube.transform.position + Vector3.right;
             targetRotation = leftWall;
             InitMovement();
@@ -260,7 +284,14 @@ public class PlayerController : MonoBehaviour
     private Vector3 CountTargetDelta(PlayerColliderController controller)
     {
         BlockColliderController blockColliderController = controller.selectedCube.GetComponent<BlockColliderController>();
-        speed = blockColliderController.speed;
+        if (blockColliderController.speed == Vector3.down)
+        {
+            speed = Vector3.zero;
+        }
+        else
+        {
+            speed = blockColliderController.speed;
+        }
         return blockColliderController.speed * PlayerSmartSettings.jumpingTime;
     }
 

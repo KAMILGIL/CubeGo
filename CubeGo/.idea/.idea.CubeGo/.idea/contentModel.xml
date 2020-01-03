@@ -27,6 +27,7 @@
           </e>
           <e p="Enemies" t="Include">
             <e p="CarController.cs" t="Include" />
+            <e p="JunkController.cs" t="Include" />
             <e p="TimberController.cs" t="Include" />
           </e>
           <e p="MapGenerator" t="Include">

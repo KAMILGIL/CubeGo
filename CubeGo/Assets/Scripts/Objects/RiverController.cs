@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,12 +15,17 @@ public class RiverController : MonoBehaviour
     
     private List<GameObject> timberPrefabs = new List<GameObject>();
 
-    private Vector3 speed; 
+    private Vector3 speed;
 
-    public void SetRiver(List<PlatformController> platforms, Vector3 speed)
+    private PlayerController playerController; 
+
+    public bool started = false;
+
+    public void SetRiver(List<PlatformController> platforms, Vector3 speed, PlayerController playerController)
     {
         this.platforms = platforms;
         this.speed = speed;
+        this.playerController = playerController;
 
         if (transform.localPosition.y > 0)
         {
@@ -31,8 +37,22 @@ public class RiverController : MonoBehaviour
             timberPrefabs.Add(Resources.Load<GameObject>("Enemies/Timbers/" + timberName));
         }
     }
-
+    
     private void Update()
+    {
+        CheckTimbers(false);
+
+        if (Mathf.Abs(playerController.transform.position.z - transform.position.z) > 6 
+            || Mathf.Abs(playerController.transform.position.y - transform.position.y) > 6)
+        {
+            CheckTimbers(true);
+            return;
+        }
+
+        FillRivers();
+    }
+
+    private void CheckTimbers(bool deleteAll)
     {
         int index = 0;
         while (true)
@@ -43,7 +63,8 @@ public class RiverController : MonoBehaviour
             }
 
             if (timbers[index].transform.position.x < platforms.First().transform.position.x - 10 ||
-                timbers[index].transform.position.x > platforms.Last().transform.position.x)
+                timbers[index].transform.position.x > platforms.Last().transform.position.x + 0 || 
+                deleteAll)
             {
                 Destroy(timbers[index]);
                 timbers.RemoveAt(index);
@@ -53,21 +74,19 @@ public class RiverController : MonoBehaviour
                 index += 1; 
             }
         }
-        
-        FillRivers();
     }
 
     private void FillRivers()
     {
         Vector3 left = platforms.First().transform.position + Vector3.left * 10;
-        Vector3 right = platforms.Last().transform.position;
+        Vector3 right = platforms.Last().transform.position + Vector3.right * 0;
         Vector3 position; 
 
-        for (float i = left.x; i < right.x; i+=Random.Range(5f, 10f))
+        for (float i = left.x; i < right.x; i+=4f)
         {
             position = new Vector3(i, 0, 0);
             
-            if (CheckPositionAbilityToSpawnTimber(position + transform.position))
+            if (CheckPositionAbilityToSpawnTimber(position))
             {
                 CreateTimber(position);
             }
@@ -76,15 +95,33 @@ public class RiverController : MonoBehaviour
 
     private bool CheckPositionAbilityToSpawnTimber(Vector3 position)
     {
+        /* 
         RaycastHit rightHit, leftHit;
 
-        if (!Physics.Raycast(position, Vector3.right, out rightHit, 5f) && 
-            !Physics.Raycast(position, Vector3.left, out leftHit, 5f))
+        if (!Physics.Raycast(position, Vector3.right, out rightHit, 6f) && 
+            !Physics.Raycast(position, Vector3.left, out leftHit, 6f))
         {
             return true; 
         }
 
-        return false;
+        return false;*/
+
+        //if (Mathf.Abs(position.x - playerController.transform.position.x) < 8)
+        //{
+        //    return false;
+        //}
+
+        float distance = Random.Range(7f, 9f);
+
+        foreach (GameObject timber in timbers)
+        {
+            if (Mathf.Abs(timber.transform.localPosition.x - position.x) < distance || Mathf.Abs(timber.transform.localPosition.x - position.x) < distance)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private void CreateTimber(Vector3 position)

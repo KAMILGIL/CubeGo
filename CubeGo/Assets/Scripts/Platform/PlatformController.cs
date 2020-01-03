@@ -18,13 +18,25 @@ public class PlatformController : MonoBehaviour
     public LayerController layer;
 
     public List<Vector3> riverCoordinates = new List<Vector3>(), 
-        roadCoordinates = new List<Vector3>();
+        roadCoordinates = new List<Vector3>(), 
+        rollBegins = new List<Vector3>(), 
+        rollEnds = new List<Vector3>();
+    
+    public List<Roll> rollData = new List<Roll>();
 
-    public Dictionary<Vector3, Vector3> rollEnds = new Dictionary<Vector3, Vector3>();
-
+    public Queue<BlockController> blocks = new Queue<BlockController>();
+    
     private void Start()
     {
         SetSkin();
+    }
+
+    private void Update()
+    {
+        if (blocks.Count > 0)
+        {
+            blocks.Dequeue().SetSkin("Winter");
+        }
     }
 
     public string GetPlatformCode()
@@ -154,6 +166,29 @@ public class PlatformController : MonoBehaviour
 
             HandleChild(child);
         }
+
+        foreach (Vector3 height in riverCoordinates)
+        {
+            if (height.y == 0)
+            {
+                for (int i = 0; i < 10; i += 1)
+                {
+                    horizontalBlocks[(int)height.z + 1, i].GetComponent<BlockColliderController>().speed = Vector3.down;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < 10; i += 1)
+                {
+                    verticalBlocks[(int)height.y - 2, i].GetComponent<BlockColliderController>().speed = Vector3.down;
+                }
+            }
+        }
+
+        for (int i = 0; i < rollBegins.Count; i++)
+        {
+            rollData.Add(new Roll(rollBegins[i] / 2 + rollEnds[i] / 2, rollEnds[i] - rollBegins[i] + Vector3.forward));
+        }
     }
 
     private bool CheckIfBlockIsRoad(GameObject block)
@@ -181,7 +216,8 @@ public class PlatformController : MonoBehaviour
         
         var childController = child.GetComponent<BlockController>();
 
-        Vector3 height = new Vector3(0, child.transform.position.y, child.transform.position.z);
+        Vector3 height = new Vector3(0, child.transform.localPosition.y, child.transform.localPosition.z);
+        
         if (childController.blockType == BlockType.River)
         {
             if (!riverCoordinates.Contains(height))
@@ -195,6 +231,18 @@ public class PlatformController : MonoBehaviour
             {
                 roadCoordinates.Add(height);
             }
+        } 
+        else if (CheckIfBlockIsRoad(child))
+        {
+            if (rollEnds.Contains(height + Vector3.back))
+            {
+                rollEnds[rollEnds.Count - 1] = height;
+            }
+            else
+            {
+                rollBegins.Add(height);
+                rollEnds.Add(height);
+            }
         }
     }
 
@@ -206,8 +254,9 @@ public class PlatformController : MonoBehaviour
             child = transform.GetChild(i).gameObject;
 
             var childController = child.GetComponent<BlockController>();
+            
+            blocks.Enqueue(childController);
 
-            childController.SetSkin("Winter");
         }
     }
 

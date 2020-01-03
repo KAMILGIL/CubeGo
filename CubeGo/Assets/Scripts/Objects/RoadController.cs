@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -14,12 +15,15 @@ public class RoadController : MonoBehaviour
     
     private List<GameObject> carPrefabs = new List<GameObject>();
 
-    private Vector3 speed; 
+    private Vector3 speed;
 
-    public void SetRoad(List<PlatformController> platforms, Vector3 speed)
+    private PlayerController playerController;
+
+    public void SetRoad(List<PlatformController> platforms, Vector3 speed, PlayerController playerController)
     {
         this.platforms = platforms;
-        this.speed = speed; 
+        this.speed = speed;
+        this.playerController = playerController;
         
         if (transform.localPosition.y > 0)
         {
@@ -34,6 +38,21 @@ public class RoadController : MonoBehaviour
 
     private void Update()
     {
+        CheckCars(false);
+        
+        if (Mathf.Abs(transform.position.z - playerController.transform.position.z) > 6
+            || Mathf.Abs(playerController.transform.position.y - transform.position.y) > 6)
+        {
+            print("road disabled");
+            CheckCars(true);
+            return;
+        }
+        
+        FillRoad();
+    }
+
+    private void CheckCars(bool deleteAll)
+    {
         int index = 0;
         while (true)
         {
@@ -43,7 +62,8 @@ public class RoadController : MonoBehaviour
             }
 
             if (cars[index].transform.position.x < platforms.First().transform.position.x - 10 ||
-                cars[index].transform.position.x > platforms.Last().transform.position.x)
+                cars[index].transform.position.x > platforms.Last().transform.position.x || 
+                deleteAll)
             {
                 Destroy(cars[index]);
                 cars.RemoveAt(index);
@@ -53,8 +73,6 @@ public class RoadController : MonoBehaviour
                 index += 1; 
             }
         }
-        
-        FillRoad();
     }
 
     private void FillRoad()
@@ -67,22 +85,39 @@ public class RoadController : MonoBehaviour
         {
             position = new Vector3(i, 0, 0) + Vector3.up * 0.8f;
             
-            if (CheckPositionAbilityToSpawnTimber(position + transform.position))
+            if (CheckPositionAbilityToSpawnCar(position))
             {
                 CreateCar(position);
             }
         }
     }
 
-    private bool CheckPositionAbilityToSpawnTimber(Vector3 position)
+    private bool CheckPositionAbilityToSpawnCar(Vector3 position)
     {
+        //if (Mathf.Abs(position.x - playerController.transform.position.x) < 4)
+        //{
+        //    return false;
+        //}
+
+        foreach (GameObject car in cars)
+        {
+            if (Mathf.Abs(car.transform.position.x - position.x) < 9)
+            {
+                return false; 
+            }
+        }
+
+        return true; 
+        
+        
+        /* 
         RaycastHit rightHit, leftHit;
 
         if (!Physics.Raycast(position, Vector3.right, out rightHit,6f) && 
             !Physics.Raycast(position, Vector3.left, out leftHit, 6f))
         {
             return true; 
-        }
+        }*/ 
 
         return false;
     }

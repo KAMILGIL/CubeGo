@@ -25,6 +25,11 @@ public class TimberController : MonoBehaviour
     private void Update()
     {
         transform.position += speed * Time.deltaTime;
+
+        foreach (GameObject collider in colliders)
+        {
+            collider.GetComponent<BlockColliderController>().speed = speed; 
+        }
     }
 
     private void CreateBlocks(string theme)

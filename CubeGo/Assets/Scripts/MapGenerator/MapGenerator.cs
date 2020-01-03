@@ -18,7 +18,7 @@ public class MapGenerator : MonoBehaviour
 
     private List<LayerController> layers = new List<LayerController>();
     
-    private Vector3 downVision = new Vector3(0, 12, 0), upVision = new Vector3(0, 9, 0);
+    private Vector3 downVision = new Vector3(0, 11, 0), upVision = new Vector3(0, 15, 0);
 
     private GameObject layerPrefab;
     private PlatformController currentPlatform;
@@ -55,7 +55,7 @@ public class MapGenerator : MonoBehaviour
 
         while (true)
         {
-            if (Math.Abs(layers[layers.Count - 1].transform.position.y - currentPlatform.transform.position.y) <= upVision.y)
+            if (Math.Abs(layers[layers.Count - 1].top.y - playerController.transform.position.y) <= upVision.y)
             {
                 layers.Add(CreateLayer());
             }
@@ -88,7 +88,7 @@ public class MapGenerator : MonoBehaviour
 
     private bool CheckLayerAtIndex(int index)
     {
-        if (Math.Abs(layers[index].transform.position.y - currentPlatform.transform.position.y) > downVision.y)
+        if (Math.Abs(layers[index].transform.position.y - playerController.transform.position.y) > downVision.y)
         {
             Destroy(layers[index].gameObject);
             return true; 
