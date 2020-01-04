@@ -31,11 +31,24 @@ public class PlayerController : MonoBehaviour
     
     public Animation movingAnimation;
 
+    private bool playedTimberAnimation = false; 
+
     private void Update()
     {
         if (!movingAnimation.isPlaying)
         {
             transform.position += speed * Time.deltaTime;
+            if (!playedTimberAnimation)
+            {
+                if (bottomCollider.selectedCube != null)
+                {
+                    if (bottomCollider.selectedCube.GetComponent<BlockController>() == null)
+                    {
+                        bottomCollider.selectedCube.transform.parent.GetComponent<TimberController>().StartMovingAnimation();
+                        playedTimberAnimation = true;
+                    }
+                }
+            }
         }
     }
 
@@ -68,6 +81,10 @@ public class PlayerController : MonoBehaviour
 
         if (!forwardCollider.isCollising && forwardBottomCollider.isCollising)
         {
+            if (!BlockIsFree(forwardBottomCollider.selectedCube))
+            {
+                return;
+            }
             target = forwardBottomCollider.selectedCube.transform.position + GetDeltaDirectionVectorToCurrentCube() + CountTargetDelta(forwardBottomCollider);
             // rotation doesn't change
             InitMovement();
@@ -110,6 +127,10 @@ public class PlayerController : MonoBehaviour
 
         if (!backCollider.isCollising && backBottomCollider.isCollising)
         {
+            if (!BlockIsFree(backBottomCollider.selectedCube))
+            {
+                return;
+            }
             target = backBottomCollider.selectedCube.transform.position + GetDeltaDirectionVectorToCurrentCube() + CountTargetDelta(backBottomCollider);
             InitMovement();
             return;
@@ -151,6 +172,10 @@ public class PlayerController : MonoBehaviour
         
         if (!rightCollider.isCollising && rightBottomCollider.isCollising)
         {
+            if (!BlockIsFree(rightBottomCollider.selectedCube))
+            {
+                return;
+            }
             target = rightBottomCollider.selectedCube.transform.position + GetDeltaDirectionVectorToCurrentCube() + CountTargetDelta(rightBottomCollider);
             InitMovement();
             return;
@@ -188,6 +213,10 @@ public class PlayerController : MonoBehaviour
         
         if (!leftCollider.isCollising && leftBottomCollider.isCollising)
         {
+            if (!BlockIsFree(leftBottomCollider.selectedCube))
+            {
+                return;
+            }
             target = leftBottomCollider.selectedCube.transform.position + GetDeltaDirectionVectorToCurrentCube() + CountTargetDelta(leftBottomCollider);
             InitMovement();
             return;
@@ -214,6 +243,26 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private bool BlockIsFree(GameObject block)
+    {
+        BlockController blockController = block.GetComponent<BlockController>();
+        if (blockController == null)
+        {
+            return true;
+        }
+
+        if (blockController.blockType == BlockType.Axe || 
+            blockController.blockType == BlockType.Empty || 
+            blockController.blockType == BlockType.River || 
+            blockController.blockType == BlockType.RoadDark || 
+            blockController.blockType == BlockType.RoadLight)
+        {
+            return true;
+        }
+        
+        return false; 
+    }
+
     public void StartShrinkingSkin()
     {
         skinAnimationController.StartSkinShrinkingAnimation();
@@ -230,6 +279,7 @@ public class PlayerController : MonoBehaviour
         // say mapGenerator that player moved 
         cameraController.MoveCamera(target);
         skinAnimationController.PlayJumpingAnimation();
+        playedTimberAnimation = false; 
     }
 
     private AnimationCurve GetCurve(float initValue, float targetValue)
@@ -295,16 +345,6 @@ public class PlayerController : MonoBehaviour
         return blockColliderController.speed * PlayerSmartSettings.jumpingTime;
     }
 
-    private bool CompareVectors(Vector3 vector1, Vector3 vector2, float epsilon)
-    {
-        if (Math.Abs(vector1.x - vector2.x) <= epsilon && Math.Abs(vector1.y - vector2.y) <= epsilon && Math.Abs(vector1.z - vector2.z) <= epsilon)
-        {
-            return true;
-        }
-
-        return false;
-    }
-    
     private bool AbsoluteRotationComparison(Vector3 vector1, Vector3 vector2, float epsilon)
     {
         if (Math.Abs((vector1.x + 360) % 360 - (vector2.x + 360) % 360) <= epsilon && Math.Abs((vector1.y + 360) % 360 - (vector2.y + 360) % 360) <= epsilon && Math.Abs((vector1.z + 360) % 360 - (vector2.z + 360) % 360) <= epsilon)

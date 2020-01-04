@@ -703,16 +703,16 @@ ScriptsOnlyBuild:
     className: LayerController
   - hash:
       serializedVersion: 2
-      Hash: c3d3430df9e3ea95e3e3d587961390fb
-    assemblyName: Unity.Timeline.dll
-    namespaceName: UnityEngine.Timeline
-    className: PlayableTrack
-  - hash:
-      serializedVersion: 2
       Hash: 1682e5526d9b3754edcc1f187c8c0486
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: JunkController
+  - hash:
+      serializedVersion: 2
+      Hash: c3d3430df9e3ea95e3e3d587961390fb
+    assemblyName: Unity.Timeline.dll
+    namespaceName: UnityEngine.Timeline
+    className: PlayableTrack
   platform: 9
   scenePathNames:
   - Assets/Scenes/GameScene.unity

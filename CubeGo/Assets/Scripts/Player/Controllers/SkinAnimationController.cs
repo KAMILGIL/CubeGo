@@ -19,6 +19,8 @@ public class SkinAnimationController : MonoBehaviour
 
     private Vector3 initPosition;
 
+    private bool setted = false; 
+
     private void Start()
     {
         animator = gameObject.GetComponent<Animator>();
@@ -45,6 +47,13 @@ public class SkinAnimationController : MonoBehaviour
     
     private void SetJumpingAnimationCurve(float topYPosition)
     {
+        if (setted)
+        {
+            return; 
+        }
+
+        setted = true; 
+        
         AnimationCurve curve;
         AnimationClip clip = new AnimationClip();
         clip.name = "jumpAnimation";
@@ -54,16 +63,16 @@ public class SkinAnimationController : MonoBehaviour
         keys = new Keyframe[3];
         keys[0] = new Keyframe(0.0f, initPosition.y);
         keys[1] = new Keyframe(PlayerSmartSettings.jumpingTime / 2f, topYPosition);
-        keys[2] = new Keyframe(PlayerSmartSettings.jumpingTime * 0.9f, initPosition.y);
+        keys[2] = new Keyframe(PlayerSmartSettings.jumpingTime * 1f, initPosition.y);
         curve = new AnimationCurve(keys);
         clip.SetCurve("", typeof(Transform), "localPosition.y", curve);
 
         jumpingAnimation.AddClip(clip, clip.name);
     }
-
+    
     public void PlayJumpingAnimation()
     {
-        SetJumpingAnimationCurve(-0.22f);
+        SetJumpingAnimationCurve(-0.24f);
         jumpingAnimation.Play("jumpAnimation");
     }
     

@@ -15,6 +15,8 @@ public class TimberController : MonoBehaviour
 
     private List<GameObject> colliders = new List<GameObject>();
 
+    private Animation movingAnimation; 
+
     private void Start()
     {
         colliderPrefab = Resources.Load<GameObject>("CustomColliders/BlockCollider");
@@ -30,6 +32,55 @@ public class TimberController : MonoBehaviour
         {
             collider.GetComponent<BlockColliderController>().speed = speed; 
         }
+
+        if (Input.GetKey(KeyCode.T))
+        {
+            if (skin.GetComponent<Animation>())
+            {
+                if (!skin.GetComponent<Animation>().isPlaying)
+                {
+                    StartMovingAnimation();
+                }
+            }
+            else
+            {
+                StartMovingAnimation();
+            }
+        }
+    }
+    
+    private AnimationCurve GetCurve(float initValue, float deltaValue)
+    {
+        AnimationCurve curve;
+        
+        Keyframe[] keys;
+        keys = new Keyframe[3];
+        keys[0] = new Keyframe(0.0f, initValue);
+        keys[1] = new Keyframe(0.1f, initValue - deltaValue);
+        keys[2] = new Keyframe(0.2f, initValue);
+        curve = new AnimationCurve(keys);
+
+        return curve;
+    }
+
+    public void StartMovingAnimation()
+    {
+        if (!skin.GetComponent<Animation>())
+        {
+            movingAnimation = skin.AddComponent<Animation>();
+        }
+
+        AnimationClip clip = new AnimationClip();
+        clip.name = "movingAnimation";
+        clip.legacy = true;
+
+        clip.SetCurve("", typeof(Transform), "localPosition.x", GetCurve(skin.transform.localPosition.x, 0));
+        clip.SetCurve("", typeof(Transform), "localPosition.y", GetCurve(skin.transform.localPosition.y, 0.1f));
+        clip.SetCurve("", typeof(Transform), "localPosition.z", GetCurve(skin.transform.localPosition.z, 0));
+
+        movingAnimation.AddClip(clip, clip.name);
+
+        movingAnimation.Play("movingAnimation");
     }
 
     private void CreateBlocks(string theme)
@@ -53,7 +104,7 @@ public class TimberController : MonoBehaviour
         }
         
         
-        skin = Instantiate(Resources.Load<GameObject>("Textures/" + theme + "/EnemySkins/" + timberType), Vector3.up * 0.3f, Quaternion.identity);
+        skin = Instantiate(Resources.Load<GameObject>("Textures/" + theme + "/EnemySkins/" + timberType), Vector3.up * 0.2f, Quaternion.identity);
         skin.transform.SetParent(transform, false);
 
         for (int i = 0; i < timberLength; i++)

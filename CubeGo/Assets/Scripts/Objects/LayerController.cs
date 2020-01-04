@@ -49,7 +49,8 @@ public class LayerController : MonoBehaviour
         }
 
         Vector3 fromTarget = Vector3.zero;
-        if (true)
+        
+        if (false)
         {
             fromTarget = currentRow; 
         }
@@ -72,7 +73,7 @@ public class LayerController : MonoBehaviour
 
         Vector3 fromTarget = Vector3.zero; 
 
-        if (true)
+        if (false)
         {
             fromTarget = currentRow; 
         }
