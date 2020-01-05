@@ -114,7 +114,7 @@ MonoBehaviour:
   m_MinSize: {x: 910, y: 392}
   m_MaxSize: {x: 22005, y: 14042}
   vertical: 1
-  controlID: 18
+  controlID: 158
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_MinSize: {x: 910, y: 392}
   m_MaxSize: {x: 22005, y: 14042}
   vertical: 0
-  controlID: 19
+  controlID: 159
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_MinSize: {x: 434, y: 392}
   m_MaxSize: {x: 14004, y: 14042}
   vertical: 1
-  controlID: 20
+  controlID: 113
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -216,7 +216,7 @@ MonoBehaviour:
   m_MinSize: {x: 434, y: 271}
   m_MaxSize: {x: 14004, y: 10021}
   vertical: 0
-  controlID: 21
+  controlID: 114
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -354,10 +354,10 @@ MonoBehaviour:
   m_ViewDataDictionary: {fileID: 0}
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 60}
-      m_SelectedIDs: 0e2e0000
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 0c2b72ff5c7d0100
+      m_ExpandedIDs: e4f8f9ff72fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -510,9 +510,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -5.792882, y: 2.8678007, z: 17.356972}
+    m_Target: {x: 7.535972, y: 3.90797, z: -12.918664}
     speed: 2
-    m_Value: {x: -5.792882, y: 2.8678007, z: 17.356972}
+    m_Value: {x: 7.535972, y: 3.90797, z: -12.918664}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -524,7 +524,7 @@ MonoBehaviour:
   m_ExposureSliderMax: 10
   m_SceneViewState:
     showFog: 1
-    showMaterialUpdate: 1
+    showMaterialUpdate: 0
     showSkybox: 0
     showFlares: 1
     showImageEffects: 1
@@ -558,13 +558,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.028785931, y: 0.039579466, z: -0.0011196935, w: -0.99882007}
+    m_Target: {x: -0.076348096, y: -0.19862275, z: -0.0155981565, w: 0.97701424}
     speed: 2
-    m_Value: {x: -0.028785385, y: 0.039578717, z: -0.0011196723, w: -0.9988011}
+    m_Value: {x: -0.07634504, y: -0.19861479, z: -0.015597532, w: 0.9769751}
   m_Size:
-    m_Target: 24.080957
+    m_Target: 2.9289417
     speed: 2
-    m_Value: 24.080957
+    m_Value: 2.9289417
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -717,34 +717,34 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Objects
+    - Assets/Resources/Objects
   m_ViewMode: 1
   m_StartGridSize: 65
   m_LastFolders:
-  - Assets/Scripts/Objects
+  - Assets/Resources/Objects
   m_LastFoldersGridSize: 65
   m_LastProjectPath: E:\UNITYPROJECTS\CubeGo\CubeGo
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 167}
-    m_SelectedIDs: 6a350000
-    m_LastClickedID: 13674
+    m_SelectedIDs: b4340000
+    m_LastClickedID: 13492
     m_ExpandedIDs: 00000000b2340000b4340000b6340000b8340000ba340000bc340000be340000c0340000c2340000c4340000c6340000c8340000ca340000cc34000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: Scenes
+      m_OriginalName: Scenes
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 13690
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_SearchString: 

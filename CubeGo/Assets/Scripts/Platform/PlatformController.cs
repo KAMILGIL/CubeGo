@@ -37,7 +37,6 @@ public class PlatformController : MonoBehaviour
         {
             blocks.Dequeue().SetSkin("Winter");
         }
-        print("fuck this print methods");
     }
 
     public string GetPlatformCode()
@@ -167,7 +166,10 @@ public class PlatformController : MonoBehaviour
 
             HandleChild(child);
         }
-        
+    }
+
+    public void SetRolls()
+    {
         for (int i = 0; i < rollBegins.Count; i++)
         {
             print(rollData.Count);
@@ -216,8 +218,9 @@ public class PlatformController : MonoBehaviour
                 roadCoordinates.Add(height);
             }
         } 
-        else if (CheckIfBlockIsRoad(child))
+        else if (childController.blockType == BlockType.Roll)
         {
+            print("found rolls");
             if (rollEnds.Contains(height + Vector3.back))
             {
                 rollEnds[rollEnds.Count - 1] = height;

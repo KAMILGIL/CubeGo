@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class RollController : MonoBehaviour
 {
-    public Vector3 center, length;
-    public PlayerController playerController;
+    private Vector3 center, length;
+    private PlayerController playerController;
 
     private List<PlatformController> platforms; 
     
