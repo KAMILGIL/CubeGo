@@ -51,7 +51,7 @@ public class CarController : MonoBehaviour
         {
             colliders.Add(Instantiate(colliderPrefab, Vector3.right / 2 + Vector3.right * i + Vector3.left * carLength / 2, Quaternion.identity));
             colliders[i].transform.SetParent(transform, false);
-            colliders[i].GetComponent<BlockColliderController>().speed = speed; 
+            colliders[i].GetComponent<BlockController>().speed = speed; 
         }
     }
 }

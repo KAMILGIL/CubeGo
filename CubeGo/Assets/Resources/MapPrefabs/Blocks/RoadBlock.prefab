@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 665232266897143410}
   - component: {fileID: 7884431615708327164}
-  - component: {fileID: 617846239573372863}
   - component: {fileID: 8842196329390088696}
   m_Layer: 0
   m_Name: RoadBlock
@@ -48,18 +47,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skin: {fileID: 0}
   blockType: 8
---- !u!114 &617846239573372863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4512937610406903259}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f9db81e2afe4464da0356ccd3a79946, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   speed: {x: 0, y: 0, z: 0}
 --- !u!65 &8842196329390088696
 BoxCollider:

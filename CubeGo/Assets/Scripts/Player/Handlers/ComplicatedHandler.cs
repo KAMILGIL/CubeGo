@@ -30,7 +30,7 @@ public class ComplicatedHandler : MonoBehaviour
             }
         }
 
-        if (PlayerSmartSettings.isPlainMode)
+        if (SmartSettings.isPlainMode)
         {
             return;
         }
@@ -158,7 +158,7 @@ public class SmartMove
 
     public SmartMove(MoveType moveType)
     {
-        this.time = PlayerSmartSettings.jumpingTime;
+        this.time = SmartSettings.jumpingTime;
         this.moveType = moveType;
     }
 }

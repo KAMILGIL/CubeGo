@@ -23,7 +23,7 @@ public class CameraController : MonoBehaviour
         
         camera = GetComponent<Camera>(); 
         
-        if (!PlayerSmartSettings.isPlainMode)
+        if (!SmartSettings.isPlainMode)
         {
             transform.position = new Vector3(5, 20, -20);
         }
@@ -82,7 +82,7 @@ public class CameraController : MonoBehaviour
         Keyframe[] keys;
         keys = new Keyframe[2];
         keys[0] = new Keyframe(0.0f, initValue);
-        keys[1] = new Keyframe(PlayerSmartSettings.jumpingTime * 2.5f, targetValue);
+        keys[1] = new Keyframe(SmartSettings.jumpingTime * 2.5f, targetValue);
         curve = new AnimationCurve(keys);
 
         return curve;
@@ -100,7 +100,7 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            clip.SetCurve("", typeof(Transform), "localPosition.z", SetMovingAnimationCurve(transform.localPosition.z, transform.localPosition.z + speed.z * PlayerSmartSettings.jumpingTime * 2.5f));
+            clip.SetCurve("", typeof(Transform), "localPosition.z", SetMovingAnimationCurve(transform.localPosition.z, transform.localPosition.z + speed.z * SmartSettings.jumpingTime * 2.5f));
         }
         clip.SetCurve("", typeof(Transform), "localPosition.y", SetMovingAnimationCurve(transform.localPosition.y, target.y));
 

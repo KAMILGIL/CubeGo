@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using UnityScript.Scripting.Pipeline;
 using Vector3 = UnityEngine.Vector3;
 
 // Player
@@ -19,7 +20,7 @@ public class SkinAnimationController : MonoBehaviour
 
     private Vector3 initPosition;
 
-    private bool setted = false; 
+    public bool playShakeAnimation = false; 
 
     private void Start()
     {
@@ -47,13 +48,6 @@ public class SkinAnimationController : MonoBehaviour
     
     private void SetJumpingAnimationCurve(float topYPosition)
     {
-        if (setted)
-        {
-            return; 
-        }
-
-        setted = true; 
-        
         AnimationCurve curve;
         AnimationClip clip = new AnimationClip();
         clip.name = "jumpAnimation";
@@ -62,8 +56,27 @@ public class SkinAnimationController : MonoBehaviour
         Keyframe[] keys;
         keys = new Keyframe[3];
         keys[0] = new Keyframe(0.0f, initPosition.y);
-        keys[1] = new Keyframe(PlayerSmartSettings.jumpingTime / 2f, topYPosition);
-        keys[2] = new Keyframe(PlayerSmartSettings.jumpingTime * 1f, initPosition.y);
+        keys[1] = new Keyframe(SmartSettings.jumpingTime / 2f, topYPosition);
+        keys[2] = new Keyframe(SmartSettings.jumpingTime * 1f, initPosition.y);
+        curve = new AnimationCurve(keys);
+        clip.SetCurve("", typeof(Transform), "localPosition.y", curve);
+
+        jumpingAnimation.AddClip(clip, clip.name);
+    }
+
+
+    private void SetShakingAnimationCurve(float shakeDelta)
+    {
+        AnimationCurve curve;
+        AnimationClip clip = new AnimationClip();
+        clip.name = "shakeAnimation";
+        clip.legacy = true;
+
+        Keyframe[] keys;
+        keys = new Keyframe[3];
+        keys[0] = new Keyframe(0.0f, initPosition.y);
+        keys[1] = new Keyframe(SmartSettings.shakeTime / 2f, initPosition.y - shakeDelta);
+        keys[2] = new Keyframe(SmartSettings.shakeTime * 1f, initPosition.y);
         curve = new AnimationCurve(keys);
         clip.SetCurve("", typeof(Transform), "localPosition.y", curve);
 
@@ -72,8 +85,20 @@ public class SkinAnimationController : MonoBehaviour
     
     public void PlayJumpingAnimation()
     {
-        SetJumpingAnimationCurve(-0.24f);
+        SetJumpingAnimationCurve(-0.22f);
         jumpingAnimation.Play("jumpAnimation");
+    }
+
+    public void PlayShakingAnimation()
+    {
+        if (!playShakeAnimation || jumpingAnimation.isPlaying)
+        {
+            return; 
+        }
+
+        playShakeAnimation = false;
+        SetShakingAnimationCurve(SmartSettings.shakeDelta);
+        jumpingAnimation.Play("shakeAnimation");
     }
     
     private void SetPivotRotationAnimationCurve(float targetRotation)
@@ -95,7 +120,7 @@ public class SkinAnimationController : MonoBehaviour
         Keyframe[] keys;
         keys = new Keyframe[2];
         keys[0] = new Keyframe(0.0f, pivotRotationAnimation.transform.localEulerAngles.y);
-        keys[1] = new Keyframe(PlayerSmartSettings.jumpingTime, targetRotation);
+        keys[1] = new Keyframe(SmartSettings.jumpingTime, targetRotation);
         curve = new AnimationCurve(keys);
         clip.SetCurve("", typeof(Transform), "localEulerAngels.y", curve);
 

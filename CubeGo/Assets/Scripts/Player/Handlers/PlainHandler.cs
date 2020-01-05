@@ -17,7 +17,7 @@ public class PlainHandler : MonoBehaviour
 
     private void Update()
     {
-        if (!PlayerSmartSettings.isPlainMode)
+        if (!SmartSettings.isPlainMode)
         {
             return;
         }
@@ -79,28 +79,28 @@ public class PlainHandler : MonoBehaviour
                 {
                     if (deltaVector.x < 0 && deltaVector.y > 0)
                     {
-                        rightTime = PlayerSmartSettings.jumpingTime * multiplier;
+                        rightTime = SmartSettings.jumpingTime * multiplier;
                     }
                     else if (deltaVector.x < 0 && deltaVector.y < 0)
                     {
-                        forwardTime = PlayerSmartSettings.jumpingTime * multiplier;
+                        forwardTime = SmartSettings.jumpingTime * multiplier;
                     }
                     else if (deltaVector.x > 0 && deltaVector.y > 0)
                     {
-                        backwardTime = PlayerSmartSettings.jumpingTime * multiplier;
+                        backwardTime = SmartSettings.jumpingTime * multiplier;
                     }
                     else if (deltaVector.x > 0 && deltaVector.y < 0)
                     {
-                        leftTime = PlayerSmartSettings.jumpingTime * multiplier;
+                        leftTime = SmartSettings.jumpingTime * multiplier;
                     }
                 }
                 else if (left.Contains(t.position))
                 {
-                    leftTime = PlayerSmartSettings.jumpingTime * multiplier;
+                    leftTime = SmartSettings.jumpingTime * multiplier;
                 } 
                 else if (right.Contains(t.position))
                 {
-                    forwardTime = PlayerSmartSettings.jumpingTime * multiplier;
+                    forwardTime = SmartSettings.jumpingTime * multiplier;
                 }
             }
         }
@@ -112,25 +112,25 @@ public class PlainHandler : MonoBehaviour
 
         if (CheckInputMoveForward())
         {
-            forwardTime = PlayerSmartSettings.jumpingTime * multiplier;
+            forwardTime = SmartSettings.jumpingTime * multiplier;
             return;
         }
 
         if (CheckInputMoveLeft())
         {
-            leftTime = PlayerSmartSettings.jumpingTime * multiplier;
+            leftTime = SmartSettings.jumpingTime * multiplier;
             return;
         }
 
         if (CheckInputMoveBackward())
         {
-            backwardTime = PlayerSmartSettings.jumpingTime *  multiplier;
+            backwardTime = SmartSettings.jumpingTime *  multiplier;
             return;
         }
 
         if (CheckInputMoveRight())
         {
-            rightTime = PlayerSmartSettings.jumpingTime * multiplier;
+            rightTime = SmartSettings.jumpingTime * multiplier;
             return;
         }
     }

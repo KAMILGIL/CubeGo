@@ -4,61 +4,15 @@ using UnityEngine;
 
 public class JunkController : MonoBehaviour
 {
-    public Vector3 speed;
-
-    public GameObject skin;
-
-    public Vector3 length;
-
-    private Animation movingAnimation;
-
-    private void Update()
-    {
-        if (!movingAnimation.isPlaying)
-        {
-            StartMovingAnimation();
-        }
-    }
-
-    public void SetJunk(Vector3 length)
-    {
-        this.length = length;
-    }
-    
-
-    public void SetSkin()
+    // Start is called before the first frame update
+    void Start()
     {
         
     }
 
-
-    private AnimationCurve GetCurve(float initValue, float targetValue)
+    // Update is called once per frame
+    void Update()
     {
-        AnimationCurve curve;
         
-        Keyframe[] keys;
-        keys = new Keyframe[2];
-        keys[0] = new Keyframe(0.0f, initValue);
-        keys[1] = new Keyframe(PlayerSmartSettings.jumpingTime, targetValue);
-        curve = new AnimationCurve(keys);
-
-        return curve;
     }
-
-    private void StartMovingAnimation()
-    {
-        Vector3 target = transform.localPosition + Vector3.right;
-        AnimationClip clip = new AnimationClip();
-        clip.name = "movingAnimation";
-        clip.legacy = true;
-
-        clip.SetCurve("", typeof(Transform), "localPosition.x", GetCurve(transform.localPosition.x, target.x));
-        clip.SetCurve("", typeof(Transform), "localPosition.y", GetCurve(transform.localPosition.y, target.y));
-        clip.SetCurve("", typeof(Transform), "localPosition.z", GetCurve(transform.localPosition.z, target.z));
-
-        movingAnimation.AddClip(clip, clip.name);
-
-        movingAnimation.Play("movingAnimation");
-    }
-
 }

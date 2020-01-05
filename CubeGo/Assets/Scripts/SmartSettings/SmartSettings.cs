@@ -3,17 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SmartSettings : MonoBehaviour
+public class SmartSetter : MonoBehaviour
 {
     private void Awake()
     {
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 30;
         QualitySettings.vSyncCount = 0;
     }
 }
 
-public class PlayerSmartSettings
+public class SmartSettings
 {
     public static bool isPlainMode = true;
-    public static float jumpingTime = 0.18f;
+    public static float jumpingTime = 0.2f;
+    public static float shakeDelta = 0.15f; 
+    public static float shakeTime = 0.16f;
 }

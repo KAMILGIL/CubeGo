@@ -24,6 +24,8 @@ public class RollController : MonoBehaviour
         {
             transform.localRotation = Quaternion.Euler(new Vector3(-90f, 0f, 0f));
         }
+        
+        print("roll setted"); 
     }
 }
 

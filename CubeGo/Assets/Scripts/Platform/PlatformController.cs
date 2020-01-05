@@ -37,6 +37,7 @@ public class PlatformController : MonoBehaviour
         {
             blocks.Dequeue().SetSkin("Winter");
         }
+        print("fuck this print methods");
     }
 
     public string GetPlatformCode()
@@ -166,27 +167,10 @@ public class PlatformController : MonoBehaviour
 
             HandleChild(child);
         }
-
-        foreach (Vector3 height in riverCoordinates)
-        {
-            if (height.y == 0)
-            {
-                for (int i = 0; i < 10; i += 1)
-                {
-                    horizontalBlocks[(int)height.z + 1, i].GetComponent<BlockColliderController>().speed = Vector3.down;
-                }
-            }
-            else
-            {
-                for (int i = 0; i < 10; i += 1)
-                {
-                    verticalBlocks[(int)height.y - 2, i].GetComponent<BlockColliderController>().speed = Vector3.down;
-                }
-            }
-        }
-
+        
         for (int i = 0; i < rollBegins.Count; i++)
         {
+            print(rollData.Count);
             rollData.Add(new Roll(rollBegins[i] / 2 + rollEnds[i] / 2, rollEnds[i] - rollBegins[i] + Vector3.forward));
         }
     }

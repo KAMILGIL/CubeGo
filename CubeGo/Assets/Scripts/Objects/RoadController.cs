@@ -43,7 +43,6 @@ public class RoadController : MonoBehaviour
         if (Mathf.Abs(transform.position.z - playerController.transform.position.z) > 6
             || Mathf.Abs(playerController.transform.position.y - transform.position.y) > 6)
         {
-            print("road disabled");
             CheckCars(true);
             return;
         }

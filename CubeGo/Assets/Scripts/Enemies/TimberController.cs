@@ -30,7 +30,7 @@ public class TimberController : MonoBehaviour
 
         foreach (GameObject collider in colliders)
         {
-            collider.GetComponent<BlockColliderController>().speed = speed; 
+            collider.GetComponent<BlockController>().speed = speed; 
         }
 
         if (Input.GetKey(KeyCode.T))
@@ -56,8 +56,8 @@ public class TimberController : MonoBehaviour
         Keyframe[] keys;
         keys = new Keyframe[3];
         keys[0] = new Keyframe(0.0f, initValue);
-        keys[1] = new Keyframe(0.1f, initValue - deltaValue);
-        keys[2] = new Keyframe(0.2f, initValue);
+        keys[1] = new Keyframe(SmartSettings.shakeTime / 2f, initValue - deltaValue);
+        keys[2] = new Keyframe(SmartSettings.shakeTime, initValue);
         curve = new AnimationCurve(keys);
 
         return curve;
@@ -70,12 +70,17 @@ public class TimberController : MonoBehaviour
             movingAnimation = skin.AddComponent<Animation>();
         }
 
+        if (movingAnimation.isPlaying)
+        {
+            return; 
+        }
+
         AnimationClip clip = new AnimationClip();
         clip.name = "movingAnimation";
         clip.legacy = true;
 
         clip.SetCurve("", typeof(Transform), "localPosition.x", GetCurve(skin.transform.localPosition.x, 0));
-        clip.SetCurve("", typeof(Transform), "localPosition.y", GetCurve(skin.transform.localPosition.y, 0.1f));
+        clip.SetCurve("", typeof(Transform), "localPosition.y", GetCurve(skin.transform.localPosition.y, SmartSettings.shakeDelta));
         clip.SetCurve("", typeof(Transform), "localPosition.z", GetCurve(skin.transform.localPosition.z, 0));
 
         movingAnimation.AddClip(clip, clip.name);
@@ -111,7 +116,7 @@ public class TimberController : MonoBehaviour
         {
             colliders.Add(Instantiate(colliderPrefab, Vector3.right / 2 + Vector3.right * i + Vector3.left * timberLength / 2, Quaternion.identity));
             colliders[i].transform.SetParent(transform, false);
-            colliders[i].GetComponent<BlockColliderController>().speed = speed; 
+            colliders[i].GetComponent<BlockController>().speed = speed; 
         }
     }
 }
