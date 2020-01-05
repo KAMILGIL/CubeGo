@@ -56,8 +56,8 @@ public class TimberController : MonoBehaviour
         Keyframe[] keys;
         keys = new Keyframe[3];
         keys[0] = new Keyframe(0.0f, initValue);
-        keys[1] = new Keyframe(SmartSettings.shakeTime / 2f, initValue - deltaValue);
-        keys[2] = new Keyframe(SmartSettings.shakeTime, initValue);
+        keys[1] = new Keyframe(SmartSettings.Data.shakeTime / 2f, initValue - deltaValue);
+        keys[2] = new Keyframe(SmartSettings.Data.shakeTime, initValue);
         curve = new AnimationCurve(keys);
 
         return curve;
@@ -80,7 +80,7 @@ public class TimberController : MonoBehaviour
         clip.legacy = true;
 
         clip.SetCurve("", typeof(Transform), "localPosition.x", GetCurve(skin.transform.localPosition.x, 0));
-        clip.SetCurve("", typeof(Transform), "localPosition.y", GetCurve(skin.transform.localPosition.y, SmartSettings.shakeDelta));
+        clip.SetCurve("", typeof(Transform), "localPosition.y", GetCurve(skin.transform.localPosition.y, SmartSettings.Data.shakeDelta));
         clip.SetCurve("", typeof(Transform), "localPosition.z", GetCurve(skin.transform.localPosition.z, 0));
 
         movingAnimation.AddClip(clip, clip.name);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using SmartSettings;
 
 public class PlainHandler : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class PlainHandler : MonoBehaviour
 
     private void Update()
     {
-        if (!SmartSettings.isPlainMode)
+        if (!SmartSettings.Data.isPlainMode)
         {
             return;
         }
@@ -79,28 +80,28 @@ public class PlainHandler : MonoBehaviour
                 {
                     if (deltaVector.x < 0 && deltaVector.y > 0)
                     {
-                        rightTime = SmartSettings.jumpingTime * multiplier;
+                        rightTime = SmartSettings.Data.jumpingTime * multiplier;
                     }
                     else if (deltaVector.x < 0 && deltaVector.y < 0)
                     {
-                        forwardTime = SmartSettings.jumpingTime * multiplier;
+                        forwardTime = SmartSettings.Data.jumpingTime * multiplier;
                     }
                     else if (deltaVector.x > 0 && deltaVector.y > 0)
                     {
-                        backwardTime = SmartSettings.jumpingTime * multiplier;
+                        backwardTime = SmartSettings.Data.jumpingTime * multiplier;
                     }
                     else if (deltaVector.x > 0 && deltaVector.y < 0)
                     {
-                        leftTime = SmartSettings.jumpingTime * multiplier;
+                        leftTime = SmartSettings.Data.jumpingTime * multiplier;
                     }
                 }
                 else if (left.Contains(t.position))
                 {
-                    leftTime = SmartSettings.jumpingTime * multiplier;
+                    leftTime = SmartSettings.Data.jumpingTime * multiplier;
                 } 
                 else if (right.Contains(t.position))
                 {
-                    forwardTime = SmartSettings.jumpingTime * multiplier;
+                    forwardTime = SmartSettings.Data.jumpingTime * multiplier;
                 }
             }
         }
@@ -112,25 +113,25 @@ public class PlainHandler : MonoBehaviour
 
         if (CheckInputMoveForward())
         {
-            forwardTime = SmartSettings.jumpingTime * multiplier;
+            forwardTime = SmartSettings.Data.jumpingTime * multiplier;
             return;
         }
 
         if (CheckInputMoveLeft())
         {
-            leftTime = SmartSettings.jumpingTime * multiplier;
+            leftTime = SmartSettings.Data.jumpingTime * multiplier;
             return;
         }
 
         if (CheckInputMoveBackward())
         {
-            backwardTime = SmartSettings.jumpingTime *  multiplier;
+            backwardTime = SmartSettings.Data.jumpingTime *  multiplier;
             return;
         }
 
         if (CheckInputMoveRight())
         {
-            rightTime = SmartSettings.jumpingTime * multiplier;
+            rightTime = SmartSettings.Data.jumpingTime * multiplier;
             return;
         }
     }

@@ -291,7 +291,7 @@ public class PlayerController : MonoBehaviour
         Keyframe[] keys;
         keys = new Keyframe[2];
         keys[0] = new Keyframe(0.0f, initValue);
-        keys[1] = new Keyframe(SmartSettings.jumpingTime, targetValue);
+        keys[1] = new Keyframe(SmartSettings.Data.jumpingTime, targetValue);
         curve = new AnimationCurve(keys);
 
         return curve;
@@ -337,7 +337,7 @@ public class PlayerController : MonoBehaviour
     {
         BlockController blockController = controller.selectedCube.GetComponent<BlockController>();
         speed = blockController.speed;
-        return blockController.speed * SmartSettings.jumpingTime;
+        return blockController.speed * SmartSettings.Data.jumpingTime;
     }
 
     private bool AbsoluteRotationComparison(Vector3 vector1, Vector3 vector2, float epsilon)

@@ -30,7 +30,7 @@ public class ComplicatedHandler : MonoBehaviour
             }
         }
 
-        if (SmartSettings.isPlainMode)
+        if (SmartSettings.Data.isPlainMode)
         {
             return;
         }
@@ -158,7 +158,7 @@ public class SmartMove
 
     public SmartMove(MoveType moveType)
     {
-        this.time = SmartSettings.jumpingTime;
+        this.time = SmartSettings.Data.jumpingTime;
         this.moveType = moveType;
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
-using UnityEngine;
-using UnityScript.Scripting.Pipeline;
+﻿using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
 // Player
@@ -56,8 +51,8 @@ public class SkinAnimationController : MonoBehaviour
         Keyframe[] keys;
         keys = new Keyframe[3];
         keys[0] = new Keyframe(0.0f, initPosition.y);
-        keys[1] = new Keyframe(SmartSettings.jumpingTime / 2f, topYPosition);
-        keys[2] = new Keyframe(SmartSettings.jumpingTime * 1f, initPosition.y);
+        keys[1] = new Keyframe(SmartSettings.Data.jumpingTime / 2f, topYPosition);
+        keys[2] = new Keyframe(SmartSettings.Data.jumpingTime * 1f, initPosition.y);
         curve = new AnimationCurve(keys);
         clip.SetCurve("", typeof(Transform), "localPosition.y", curve);
 
@@ -75,8 +70,8 @@ public class SkinAnimationController : MonoBehaviour
         Keyframe[] keys;
         keys = new Keyframe[3];
         keys[0] = new Keyframe(0.0f, initPosition.y);
-        keys[1] = new Keyframe(SmartSettings.shakeTime / 2f, initPosition.y - shakeDelta);
-        keys[2] = new Keyframe(SmartSettings.shakeTime * 1f, initPosition.y);
+        keys[1] = new Keyframe(SmartSettings.Data.shakeTime / 2f, initPosition.y - shakeDelta);
+        keys[2] = new Keyframe(SmartSettings.Data.shakeTime * 1f, initPosition.y);
         curve = new AnimationCurve(keys);
         clip.SetCurve("", typeof(Transform), "localPosition.y", curve);
 
@@ -97,7 +92,7 @@ public class SkinAnimationController : MonoBehaviour
         }
 
         playShakeAnimation = false;
-        SetShakingAnimationCurve(SmartSettings.shakeDelta);
+        SetShakingAnimationCurve(SmartSettings.Data.shakeDelta);
         jumpingAnimation.Play("shakeAnimation");
     }
     
@@ -120,7 +115,7 @@ public class SkinAnimationController : MonoBehaviour
         Keyframe[] keys;
         keys = new Keyframe[2];
         keys[0] = new Keyframe(0.0f, pivotRotationAnimation.transform.localEulerAngles.y);
-        keys[1] = new Keyframe(SmartSettings.jumpingTime, targetRotation);
+        keys[1] = new Keyframe(SmartSettings.Data.jumpingTime, targetRotation);
         curve = new AnimationCurve(keys);
         clip.SetCurve("", typeof(Transform), "localEulerAngels.y", curve);
 
