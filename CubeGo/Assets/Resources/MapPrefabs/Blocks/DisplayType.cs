@@ -16,7 +16,7 @@ class LabelHandle : Editor
         SceneView.duringSceneGui += CustomOnSceneGUI;
         blockController = (BlockController)target;
     }
-     
+    
     void CustomOnSceneGUI(SceneView sceneview)
     {
         blockController = (BlockController)target;
@@ -40,7 +40,6 @@ class LabelHandle : Editor
     }
     void OnSceneGUI()
     {
-        /*
         BlockController blockController = (BlockController)target;
         if (blockController == null)
         {
@@ -51,6 +50,6 @@ class LabelHandle : Editor
         GUIStyle style = new GUIStyle();
         style.fontSize = 20;
         style.alignment = TextAnchor.MiddleCenter;
-        Handles.Label(blockController.transform.position, BlockTypeExtension.ToFriendlyString(blockController.blockType), style);*/
+        Handles.Label(blockController.transform.position, BlockTypeExtension.ToFriendlyString(blockController.blockType), style);
     }
 }
