@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ public class RollController : MonoBehaviour
 
     private List<PlatformController> platforms; 
     
-    private List<GameObject> junk = new List<GameObject>();
+    private List<JunkController> junk = new List<JunkController>();
     private GameObject junkPrefab;
 
     public void SetRoll(Vector3 center, Vector3 length, PlayerController playerController, List<PlatformController> platforms)
@@ -19,7 +20,6 @@ public class RollController : MonoBehaviour
         this.playerController = playerController;
         this.platforms = platforms;
         
-        
         if (transform.localPosition.y > 0)
         {
             transform.localRotation = Quaternion.Euler(new Vector3(-90f, 0f, 0f));
@@ -27,6 +27,17 @@ public class RollController : MonoBehaviour
         
         print("roll setted"); 
     }
+
+    private void Update()
+    {
+        
+    }
+
+    private void CheckJunk()
+    {
+        
+    }
+    
 }
 
 

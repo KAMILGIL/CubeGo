@@ -37,6 +37,8 @@ public enum BlockType
     Spikes, 
     Axe, 
     Saw,
+    SawEnd,
+    SawStart,
     FallingBlocks,
     Invisible, 
     Edge,
@@ -79,6 +81,10 @@ public static class BlockTypeExtension
                 return "Axe";
             case  BlockType.Saw:
                 return "Saw";
+            case BlockType.SawStart:
+                return "SawStart";
+            case BlockType.SawEnd:
+                return "SawEnd";
             case BlockType.Invisible:
                 return "Invisible";
             case  BlockType.FallingBlocks:
@@ -88,7 +94,7 @@ public static class BlockTypeExtension
             case BlockType.None:
                 return "None";
             case BlockType.Roll:
-                return "Roll"; 
+                return "Roll";
             default:
                 return "Fuck this game"; 
         }

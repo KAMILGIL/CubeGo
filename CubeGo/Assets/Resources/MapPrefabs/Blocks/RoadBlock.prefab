@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &665232266897143410
 Transform:
@@ -48,6 +48,7 @@ MonoBehaviour:
   skin: {fileID: 0}
   blockType: 8
   speed: {x: 0, y: 0, z: 0}
+  isTimber: 0
 --- !u!65 &8842196329390088696
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -77,7 +78,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4625380002897804966
 Transform:

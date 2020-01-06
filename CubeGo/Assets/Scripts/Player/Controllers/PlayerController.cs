@@ -256,8 +256,11 @@ public class PlayerController : MonoBehaviour
             blockController.blockType == BlockType.River ||
             blockController.blockType == BlockType.RoadDark ||
             blockController.blockType == BlockType.RoadLight ||
-            blockController.blockType == BlockType.Edge || 
-            blockController.blockType == BlockType.Roll)
+            blockController.blockType == BlockType.Edge ||
+            blockController.blockType == BlockType.Roll ||
+            blockController.blockType == BlockType.Saw || 
+            blockController.blockType == BlockType.SawStart || 
+            blockController.blockType == BlockType.SawEnd)
         {
             return true;
         }

@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class JunkController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private GameObject junkSkin;
 
-    // Update is called once per frame
-    void Update()
+    public void SetJunk(int length, Vector3 speed)
     {
-        
     }
 }
