@@ -25,7 +25,7 @@ public class LayerController : MonoBehaviour
         this.prefabManager = prefabManager;
 
         key = prefabManager.GetRandomKey();
-        top = transform.position + prefabManager.GetSizeForKey(key) + Vector3.back;
+        top = transform.position + prefabManager.GetSizeForKey(key) + Vector3.forward;
         
         platforms.Add(CreatePlatform(defaultPlatformPosition));
 
@@ -110,6 +110,7 @@ public class LayerController : MonoBehaviour
         
         platformController.transform.SetParent(transform, false);
         platformController.layer = this;
+        platformController.isInGame = true;
         
         return platformController;
     }

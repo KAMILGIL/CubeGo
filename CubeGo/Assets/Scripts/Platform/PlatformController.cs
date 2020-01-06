@@ -25,9 +25,15 @@ public class PlatformController : MonoBehaviour
     public List<Roll> rollData = new List<Roll>();
 
     public Queue<BlockController> blocks = new Queue<BlockController>();
+
+    public bool isInGame = false; 
     
     private void Start()
     {
+        if (!isInGame)
+        {
+            return; 
+        }
         SetSkin();
     }
 

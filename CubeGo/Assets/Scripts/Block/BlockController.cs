@@ -15,6 +15,14 @@ public class BlockController : MonoBehaviour
 
     public bool isTimber;
 
+    private void Start()
+    {
+        if (blockType == BlockType.River)
+        {
+            GetComponent<BoxCollider>().enabled = false;
+        }
+    }
+
     public void SetSkin(string theme) // skin needs to instantiated from pool or something like this 
     {
         skin = Instantiate(Resources.Load<GameObject>("Textures/" + theme + "/BlockSkins/" + BlockTypeExtension.ToFriendlyString(blockType)), Vector3.zero, Quaternion.identity);

@@ -15,13 +15,20 @@ public class PrefabManager : MonoBehaviour
     public List<string> keys = new List<string>();
 
     //private string[] names = new string[]{"P(10-7-8)Junk", "P(10-4-6)", "P(10-7-8)", "P(10-10-10)Cars"};
-    private string[] names = new string[]{"P(10-7-8)Junk", "P(10-10-10)Cars"};
+    private Dictionary<string, string[]> folders = new Dictionary<string, string[]>();
 
     private void LoadPrefabs()
     {
-        foreach (string name in names)
+        folders["10-5-5"] = new[] {"1"};
+
+        foreach (string folder in folders.Keys)
         {
-            prefabs.Add(Resources.Load<GameObject>("MapPrefabs/Platforms/" + name));
+            foreach (string prefabName in folders[folder])
+            {
+                prefabs.Add(Resources.Load<GameObject>("MapPrefabs/Platforms/" + folder + "/"+ prefabName));
+                print(prefabName);
+                print(prefabs.Last().name);
+            }
         }
     }
 
