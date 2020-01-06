@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+[ExecuteInEditMode]
 public class BlockController : MonoBehaviour
 {
     public GameObject skin; 

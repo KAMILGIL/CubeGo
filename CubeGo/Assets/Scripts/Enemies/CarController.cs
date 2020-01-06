@@ -44,7 +44,7 @@ public class CarController : MonoBehaviour
                 break;
         }
 
-        skin = Instantiate(Resources.Load<GameObject>("Textures/" + theme + "/EnemySkins/" + carType), Vector3.zero, Quaternion.identity);
+        skin = Instantiate(Resources.Load<GameObject>("Textures/" + theme + "/EnemySkins/Cars/" + carType), Vector3.zero, Quaternion.identity);
         skin.transform.SetParent(transform, false);
 
         for (int i = 0; i < carLength; i++)

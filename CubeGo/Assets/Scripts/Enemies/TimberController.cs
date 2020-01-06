@@ -109,7 +109,7 @@ public class TimberController : MonoBehaviour
         }
         
         
-        skin = Instantiate(Resources.Load<GameObject>("Textures/" + theme + "/EnemySkins/" + timberType), Vector3.up * 0.2f, Quaternion.identity);
+        skin = Instantiate(Resources.Load<GameObject>("Textures/" + theme + "/EnemySkins/Timbers/" + timberType), Vector3.up * 0.2f, Quaternion.identity);
         skin.transform.SetParent(transform, false);
 
         for (int i = 0; i < timberLength; i++)

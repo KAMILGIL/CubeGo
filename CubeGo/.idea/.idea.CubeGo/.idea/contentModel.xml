@@ -21,6 +21,13 @@
             <e p="EasyFpsCounter.cs" t="Include" />
           </e>
         </e>
+        <e p="Resources" t="Include">
+          <e p="MapPrefabs" t="Include">
+            <e p="Blocks" t="Include">
+              <e p="DisplayType.cs" t="Include" />
+            </e>
+          </e>
+        </e>
         <e p="Scripts" t="Include">
           <e p="Block" t="Include">
             <e p="BlockController.cs" t="Include" />
