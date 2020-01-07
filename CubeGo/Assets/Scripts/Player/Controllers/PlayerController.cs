@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
         {
             transform.position += speed * Time.deltaTime;
         }
-        if (VectorComparison(transform.position, target, 0.1f))
+        if (VectorComparison(transform.position, target, 0.05f) && !movingAnimation.isPlaying)
         {
             if (bottomCollider.selectedCube.GetComponent<BlockController>().speed.magnitude > 0)
             {
@@ -288,6 +288,7 @@ public class PlayerController : MonoBehaviour
         Keyframe[] keys;
         keys = new Keyframe[2];
         keys[0] = new Keyframe(0.0f, initValue);
+        //keys[1] = new Keyframe(SmartSettings.Data.jumpingTime / 4, (targetValue - initValue) / 3);
         keys[1] = new Keyframe(SmartSettings.Data.jumpingTime, targetValue);
         curve = new AnimationCurve(keys);
 
