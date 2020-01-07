@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
         {
             transform.position += speed * Time.deltaTime;
         }
-        if (VectorComparison(transform.position, target, 0.05f) && !movingAnimation.isPlaying)
+        if (VectorComparison(transform.position, target, 0.1f) && !movingAnimation.isPlaying)
         {
             if (bottomCollider.selectedCube.GetComponent<BlockController>().speed.magnitude > 0)
             {
