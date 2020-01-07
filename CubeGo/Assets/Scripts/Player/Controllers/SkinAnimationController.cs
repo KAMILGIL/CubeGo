@@ -15,8 +15,6 @@ public class SkinAnimationController : MonoBehaviour
 
     private Vector3 initPosition;
 
-    public bool playShakeAnimation = false; 
-
     private void Start()
     {
         animator = gameObject.GetComponent<Animator>();
@@ -69,7 +67,7 @@ public class SkinAnimationController : MonoBehaviour
 
         Keyframe[] keys;
         keys = new Keyframe[3];
-        keys[0] = new Keyframe(0.0f, initPosition.y);
+        keys[0] = new Keyframe(0.0f, transform.localPosition.y);
         keys[1] = new Keyframe(SmartSettings.Data.shakeTime / 2f, initPosition.y - shakeDelta);
         keys[2] = new Keyframe(SmartSettings.Data.shakeTime * 1f, initPosition.y);
         curve = new AnimationCurve(keys);
@@ -86,12 +84,6 @@ public class SkinAnimationController : MonoBehaviour
 
     public void PlayShakingAnimation()
     {
-        if (!playShakeAnimation || jumpingAnimation.isPlaying)
-        {
-            return; 
-        }
-
-        playShakeAnimation = false;
         SetShakingAnimationCurve(SmartSettings.Data.shakeDelta);
         jumpingAnimation.Play("shakeAnimation");
     }

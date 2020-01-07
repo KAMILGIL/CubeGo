@@ -33,8 +33,6 @@ public class PlayerController : MonoBehaviour
     
     public Animation movingAnimation;
 
-    private bool playedTimberAnimation = false; 
-
     private void Update()
     {
         if (!movingAnimation.isPlaying)
@@ -46,7 +44,6 @@ public class PlayerController : MonoBehaviour
             if (bottomCollider.selectedCube.GetComponent<BlockController>().speed.magnitude > 0)
             {
                 bottomCollider.selectedCube.GetComponent<BlockController>().transform.parent.GetComponent<TimberController>().StartMovingAnimation();
-                skinAnimationController.playShakeAnimation = true; 
                 skinAnimationController.PlayShakingAnimation();
             }
         }
@@ -86,7 +83,6 @@ public class PlayerController : MonoBehaviour
                 return;
             }
             target = forwardBottomCollider.selectedCube.transform.position + GetDeltaDirectionVectorToCurrentCube() + CountTargetDelta(forwardBottomCollider);
-            // rotation doesn't change
             InitMovement();
             return; 
         }
@@ -278,13 +274,11 @@ public class PlayerController : MonoBehaviour
         skinAnimationController.StartSkinExpandingAnimation();
     }
 
-    private void InitMovement()
+    private void InitMovement() // add argument BlockController targetBlock in order make shaking on timber nice 
     {
         StartMovingAnimation();
-        // say mapGenerator that player moved 
         cameraController.MoveCamera(target);
         skinAnimationController.PlayJumpingAnimation();
-        playedTimberAnimation = false; 
     }
 
     private AnimationCurve GetCurve(float initValue, float targetValue)

@@ -66,13 +66,15 @@ public class CameraController : MonoBehaviour
         {
             camera.orthographicSize = 6.7f;
         }
+
+        transform.position += (playerController.transform.position + playerDelta - transform.position) * Time.deltaTime * 2.8f;
     }
 
     public void MoveCamera(Vector3 position)
     {
-        target = position + playerDelta;
-        SetMovingAnimation();
-        PlayMovingAnimation();
+        //target = position + playerDelta;
+        //SetMovingAnimation();
+        //PlayMovingAnimation();
     }
     
     private AnimationCurve SetMovingAnimationCurve(float initValue, float targetValue)
