@@ -179,7 +179,7 @@ public class PlatformController : MonoBehaviour
         for (int i = 0; i < rollBegins.Count; i++)
         {
             print(rollData.Count);
-            rollData.Add(new Roll(rollBegins[i] / 2 + rollEnds[i] / 2, rollEnds[i] - rollBegins[i] + Vector3.forward));
+            rollData.Add(new Roll(rollBegins[i], rollEnds[i]));
         }
     }
 

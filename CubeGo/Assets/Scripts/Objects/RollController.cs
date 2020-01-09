@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class RollController : MonoBehaviour
 {
-    private Vector3 center, length;
+    private Vector3 start, end;
     private PlayerController playerController;
 
     private List<PlatformController> platforms; 
@@ -13,10 +13,10 @@ public class RollController : MonoBehaviour
     private List<JunkController> junk = new List<JunkController>();
     private GameObject junkPrefab;
 
-    public void SetRoll(Vector3 center, Vector3 length, PlayerController playerController, List<PlatformController> platforms)
+    public void SetRoll(Vector3 start, Vector3 end, PlayerController playerController, List<PlatformController> platforms)
     {
-        this.center = center;
-        this.length = length;
+        this.start = start;
+        this.end = end; 
         this.playerController = playerController;
         this.platforms = platforms;
         
@@ -24,8 +24,6 @@ public class RollController : MonoBehaviour
         {
             transform.localRotation = Quaternion.Euler(new Vector3(-90f, 0f, 0f));
         }
-        
-        print("roll setted"); 
     }
 
     private void Update()
@@ -43,11 +41,11 @@ public class RollController : MonoBehaviour
 
 public class Roll
 {
-    public Vector3 center, length;
+    public Vector3 start, end;
 
-    public Roll(Vector3 center, Vector3 length)
+    public Roll(Vector3 start, Vector3 end)
     {
-        this.center = center;
-        this.length = length; 
+        this.start = end;
+        this.end = end; 
     }
 }

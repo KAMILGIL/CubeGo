@@ -35,17 +35,7 @@ public class TimberController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.T))
         {
-            if (skin.GetComponent<Animation>())
-            {
-                if (!skin.GetComponent<Animation>().isPlaying)
-                {
-                    StartMovingAnimation();
-                }
-            }
-            else
-            {
-                StartMovingAnimation();
-            }
+            StartMovingAnimation();
         }
     }
     
@@ -79,10 +69,8 @@ public class TimberController : MonoBehaviour
         clip.name = "movingAnimation";
         clip.legacy = true;
 
-        clip.SetCurve("", typeof(Transform), "localPosition.x", GetCurve(skin.transform.localPosition.x, 0));
         clip.SetCurve("", typeof(Transform), "localPosition.y", GetCurve(skin.transform.localPosition.y, SmartSettings.Data.shakeDelta));
-        clip.SetCurve("", typeof(Transform), "localPosition.z", GetCurve(skin.transform.localPosition.z, 0));
-
+        
         movingAnimation.AddClip(clip, clip.name);
 
         movingAnimation.Play("movingAnimation");
@@ -114,8 +102,8 @@ public class TimberController : MonoBehaviour
 
         for (int i = 0; i < timberLength; i++)
         {
-            colliders.Add(Instantiate(colliderPrefab, Vector3.right / 2 + Vector3.right * i + Vector3.left * timberLength / 2, Quaternion.identity));
-            colliders[i].transform.SetParent(transform, false);
+            colliders.Add(Instantiate(colliderPrefab, Vector3.right / 2 + Vector3.right * i + Vector3.left * timberLength / 2 + Vector3.up * 0.2f, Quaternion.identity));
+            colliders[i].transform.SetParent(skin.transform, false);
             colliders[i].GetComponent<BlockController>().speed = speed; 
         }
     }

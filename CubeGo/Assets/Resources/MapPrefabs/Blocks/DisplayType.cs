@@ -30,6 +30,8 @@ class LabelHandle : Editor
         style.fontSize = 20;
         style.alignment = TextAnchor.MiddleCenter;
         Handles.Label(blockController.transform.position, BlockTypeExtension.ToFriendlyString(blockController.blockType), style);
+        //DestroyImmediate(blockController.transform.GetChild(0));
+        
     }
     
     public override void OnInspectorGUI ()
@@ -50,6 +52,7 @@ class LabelHandle : Editor
         GUIStyle style = new GUIStyle();
         style.fontSize = 20;
         style.alignment = TextAnchor.MiddleCenter;
-        Handles.Label(blockController.transform.position, BlockTypeExtension.ToFriendlyString(blockController.blockType), style);
+        Handles.Label(blockController.transform.position, BlockTypeExtension.ToFriendlyString(blockController.blockType), style); 
+        //DestroyImmediate(blockController.transform.GetChild(0));
     }
 }

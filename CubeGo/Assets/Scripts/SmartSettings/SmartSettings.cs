@@ -18,7 +18,7 @@ namespace SmartSettings
     public class Data
     {
         public static bool isPlainMode = true;
-        public static float jumpingTime = 0.18f;
+        public static float jumpingTime = 0.2f;
         public static float shakeDelta = 0.15f; 
         public static float shakeTime = 0.16f;
     }

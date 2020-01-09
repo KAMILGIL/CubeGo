@@ -6,7 +6,8 @@ public class JunkController : MonoBehaviour
 {
     private GameObject junkSkin;
 
-    public void SetJunk(int length, Vector3 speed)
+    public void SetJunk(Vector3 begin, Vector3 end, Vector3 speed)
     {
+        junkSkin = Resources.Load<GameObject>("Textures/EnemySkin/Junk");
     }
 }

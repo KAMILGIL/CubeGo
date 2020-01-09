@@ -40,16 +40,14 @@ public class EnvironmentController : MonoBehaviour
             roads.Last().transform.SetParent(transform, false); 
             roads.Last().SetRoad(this.platforms, GetRandomRoadSpeed(), playerController);
         }
-
-        print(platforms.First().rollBegins.Count.ToString() + " fuck this shit ");
-        print(platforms.First().rollData.Count.ToString() + "   " + platforms.First().name);
+        
         platforms.First().SetRolls();
         foreach (Roll rollData in platforms.First().rollData)
         {
             print("setting roll");
-            rolls.Add(Instantiate(rollPrefab, rollData.center, Quaternion.identity).GetComponent<RollController>());
+            rolls.Add(Instantiate(rollPrefab, rollData.start, Quaternion.identity).GetComponent<RollController>());
             rolls.Last().transform.SetParent(transform, false);
-            rolls.Last().SetRoll(rollData.center, rollData.length, playerController, platforms);
+            rolls.Last().SetRoll(rollData.start, rollData.end, playerController, platforms);
         }
     }
     

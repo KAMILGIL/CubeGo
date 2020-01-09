@@ -12,7 +12,7 @@ public class PlainHandler : MonoBehaviour
 
     private float forwardTime, leftTime, rightTime, backwardTime;
 
-    private float multiplier = 1f;
+    private float multiplier = 0.7f;
 
     private Vector2 touchStartPosition; 
 

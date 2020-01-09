@@ -19,15 +19,13 @@ public class PrefabManager : MonoBehaviour
 
     private void LoadPrefabs()
     {
-        folders["10-5-5"] = new[] {"1"};
+        folders["10-5-5"] = new[] {"1", "2"};
 
         foreach (string folder in folders.Keys)
         {
             foreach (string prefabName in folders[folder])
             {
                 prefabs.Add(Resources.Load<GameObject>("MapPrefabs/Platforms/" + folder + "/"+ prefabName));
-                print(prefabName);
-                print(prefabs.Last().name);
             }
         }
     }

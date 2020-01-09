@@ -29,7 +29,9 @@ public class PlayerController : MonoBehaviour
     private ComplicatedHandler complicatedHandler;
     
     private Vector3 target, targetRotation, wallUp = new Vector3(-90f, 0, 0), leftWall = new Vector3(0f, 0f, -90f), floor = Vector3.zero;
-    public Vector3 speed; 
+    public Vector3 speed;
+
+    private bool addedClip = false; 
     
     public Animation movingAnimation;
 
@@ -39,12 +41,18 @@ public class PlayerController : MonoBehaviour
         {
             transform.position += speed * Time.deltaTime;
         }
-        if (VectorComparison(transform.position, target, 0.1f) && !movingAnimation.isPlaying)
+
+
+        if (!addedClip)
+        {
+            return; 
+        }
+
+        if (Math.Abs(movingAnimation["movingAnimation"].time - SmartSettings.Data.jumpingTime) <= 0.02f) // needs to be changed to detection of animation duration 
         {
             if (bottomCollider.selectedCube.GetComponent<BlockController>().speed.magnitude > 0)
             {
-                bottomCollider.selectedCube.GetComponent<BlockController>().transform.parent.GetComponent<TimberController>().StartMovingAnimation();
-                skinAnimationController.PlayShakingAnimation();
+                bottomCollider.selectedCube.GetComponent<BlockController>().transform.parent.parent.GetComponent<TimberController>().StartMovingAnimation();
             }
         }
     }
@@ -82,32 +90,27 @@ public class PlayerController : MonoBehaviour
             {
                 return;
             }
-            target = forwardBottomCollider.selectedCube.transform.position + GetDeltaDirectionVectorToCurrentCube() + CountTargetDelta(forwardBottomCollider);
-            InitMovement();
+
+            target = Vector3.up;
+            targetRotation = floor;
+            InitMovement(forwardBottomCollider.selectedCube);
             return; 
         }
 
         if (forwardCollider.isCollising)
         {
-            if (forwardCollider.selectedCube.GetComponent<BlockController>().speed.magnitude > 0)
-            {
-                return; 
-            }
-            target = forwardCollider.selectedCube.transform.position + Vector3.back; 
-            targetRotation = wallUp;
-            InitMovement();
+            target = Vector3.up; 
+            targetRotation = floor;
+            InitMovement(forwardCollider.selectedCube);
             return;
         }
 
-        if (!forwardCollider.isCollising && !forwardBottomCollider.isCollising && AbsoluteRotationComparison(transform.localEulerAngles, wallUp, 1f))
+        if (!forwardCollider.isCollising && !forwardBottomCollider.isCollising && bottomCollider.selectedCube.GetComponent<BlockController>().blockType == BlockType.Edge)
         {
-            if (bottomCollider.selectedCube.GetComponent<BlockController>().blockType != BlockType.Edge)
-            {
-                return;
-            }
-            target = bottomCollider.selectedCube.transform.position + Vector3.up;
-            targetRotation = floor;
-            InitMovement();
+            transform.SetParent(bottomCollider.selectedCube.transform);
+            target = Vector3.forward;
+            targetRotation = -wallUp;
+            InitMovement(bottomCollider.selectedCube);
             return;
         }
     }
@@ -127,8 +130,20 @@ public class PlayerController : MonoBehaviour
             {
                 return;
             }
-            target = backBottomCollider.selectedCube.transform.position + GetDeltaDirectionVectorToCurrentCube() + CountTargetDelta(backBottomCollider);
-            InitMovement();
+
+            if (backBottomCollider.selectedCube.GetComponent<BlockController>().blockType == BlockType.Edge)
+            {
+                target = Vector3.forward;
+                targetRotation = -wallUp; 
+            }
+            else
+            {
+                target = Vector3.up;
+                targetRotation = floor;
+            }
+
+
+            InitMovement(backBottomCollider.selectedCube);
             return;
         }
 
@@ -138,9 +153,9 @@ public class PlayerController : MonoBehaviour
             {
                 return;
             }
-            target = backCollider.selectedCube.transform.position + Vector3.up;
+            target = Vector3.up;
             targetRotation = floor;
-            InitMovement();
+            InitMovement(backCollider.selectedCube);
             return;
         }
 
@@ -150,9 +165,9 @@ public class PlayerController : MonoBehaviour
             {
                 return;
             }
-            target = bottomCollider.selectedCube.transform.position + Vector3.back;
-            targetRotation = wallUp;
-            InitMovement();
+            target = Vector3.up;
+            targetRotation = floor;
+            InitMovement(bottomCollider.selectedCube);
             return;
         }
     }
@@ -172,8 +187,9 @@ public class PlayerController : MonoBehaviour
             {
                 return;
             }
-            target = rightBottomCollider.selectedCube.transform.position + GetDeltaDirectionVectorToCurrentCube() + CountTargetDelta(rightBottomCollider);
-            InitMovement();
+
+            
+            InitMovement(rightBottomCollider.selectedCube);
             return;
         }
 
@@ -183,9 +199,9 @@ public class PlayerController : MonoBehaviour
             {
                 return;
             }
-            target = rightCollider.selectedCube.transform.position + Vector3.up;
+            target = Vector3.up;
             targetRotation = floor; 
-            InitMovement();
+            InitMovement(rightCollider.selectedCube);
             return;
         }
 
@@ -213,8 +229,9 @@ public class PlayerController : MonoBehaviour
             {
                 return;
             }
-            target = leftBottomCollider.selectedCube.transform.position + GetDeltaDirectionVectorToCurrentCube() + CountTargetDelta(leftBottomCollider);
-            InitMovement();
+            
+            
+            InitMovement(leftBottomCollider.selectedCube);
             return;
         }
 
@@ -224,9 +241,9 @@ public class PlayerController : MonoBehaviour
             {
                 return;
             }
-            target = leftCollider.selectedCube.transform.position + Vector3.right;
+            target = Vector3.right;
             targetRotation = leftWall;
-            InitMovement();
+            InitMovement(leftCollider.selectedCube);
             return;
         }
 
@@ -253,7 +270,7 @@ public class PlayerController : MonoBehaviour
             blockController.blockType == BlockType.RoadDark ||
             blockController.blockType == BlockType.RoadLight ||
             blockController.blockType == BlockType.Edge ||
-            blockController.blockType == BlockType.Roll ||
+            blockController.blockType == BlockType.Roll || 
             blockController.blockType == BlockType.Saw || 
             blockController.blockType == BlockType.SawStart || 
             blockController.blockType == BlockType.SawEnd)
@@ -274,8 +291,9 @@ public class PlayerController : MonoBehaviour
         skinAnimationController.StartSkinExpandingAnimation();
     }
 
-    private void InitMovement() // add argument BlockController targetBlock in order make shaking on timber nice 
+    private void InitMovement(GameObject targetBlock) // add argument BlockController targetBlock in order make shaking on timber nice 
     {
+        transform.SetParent(targetBlock.transform);
         StartMovingAnimation();
         cameraController.MoveCamera(target);
         skinAnimationController.PlayJumpingAnimation();
@@ -317,25 +335,9 @@ public class PlayerController : MonoBehaviour
         }
         
         movingAnimation.AddClip(clip, clip.name);
+        addedClip = true;
 
         movingAnimation.Play("movingAnimation");
-    }
-
-    private Vector3 GetDeltaDirectionVectorToCurrentCube()
-    {
-        if (AbsoluteRotationComparison(transform.localEulerAngles, wallUp, 2f))
-        {
-            return Vector3.back;
-        }
-
-        return Vector3.up;
-    }
-
-    private Vector3 CountTargetDelta(PlayerColliderController controller)
-    {
-        BlockController blockController = controller.selectedCube.GetComponent<BlockController>();
-        speed = blockController.speed;
-        return blockController.speed * SmartSettings.Data.jumpingTime;
     }
 
     private bool AbsoluteRotationComparison(Vector3 vector1, Vector3 vector2, float epsilon)
