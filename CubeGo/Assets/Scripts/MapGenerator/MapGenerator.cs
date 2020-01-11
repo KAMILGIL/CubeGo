@@ -18,7 +18,7 @@ public class MapGenerator : MonoBehaviour
 
     private List<LayerController> layers = new List<LayerController>();
     
-    private Vector3 downVision = new Vector3(0, 11, 0), upVision = new Vector3(0, 15, 0);
+    private Vector3 downVision = new Vector3(0, 11, 0), upVision = new Vector3(0, 10, 0);
 
     private GameObject layerPrefab;
     private PlatformController currentPlatform;

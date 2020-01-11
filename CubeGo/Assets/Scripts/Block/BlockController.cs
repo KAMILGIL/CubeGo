@@ -36,6 +36,7 @@ public class BlockController : MonoBehaviour
         }
         skin = Instantiate(Resources.Load<GameObject>("Textures/" + theme + "/BlockSkins/" + BlockTypeExtension.ToFriendlyString(blockType)), Vector3.zero, Quaternion.identity);
         skin.transform.SetParent(transform, false);
+        gameObject.SetActive(true);
     }
 }
 

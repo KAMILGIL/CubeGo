@@ -264,7 +264,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 4.4627738e+30, z: 7.27084e+31, w: 1.5792663e-19}
+  m_BoundingSphereOverride: {x: 3.0092666e-36, y: 1.009742e-28, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -292,6 +292,10 @@ PrefabInstance:
     - target: {fileID: 1898487351219800, guid: 1f0f9a04e9ac697429752a9f888d02f1, type: 3}
       propertyPath: m_Name
       value: NvidiaCounter
+      objectReference: {fileID: 0}
+    - target: {fileID: 1898487351219800, guid: 1f0f9a04e9ac697429752a9f888d02f1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224054463802735632, guid: 1f0f9a04e9ac697429752a9f888d02f1,
         type: 3}

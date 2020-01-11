@@ -107,25 +107,25 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11790}
     - Class: 114
-      Script: {instanceID: 11972}
+      Script: {instanceID: 11976}
     - Class: 114
-      Script: {instanceID: 12048}
+      Script: {instanceID: 12052}
     - Class: 114
-      Script: {instanceID: 12128}
+      Script: {instanceID: 12132}
     - Class: 114
-      Script: {instanceID: 12542}
+      Script: {instanceID: 12550}
     - Class: 114
-      Script: {instanceID: 12620}
+      Script: {instanceID: 12628}
     - Class: 114
-      Script: {instanceID: 12632}
+      Script: {instanceID: 12640}
     - Class: 114
-      Script: {instanceID: 12664}
+      Script: {instanceID: 12672}
     - Class: 114
-      Script: {instanceID: 12682}
+      Script: {instanceID: 12690}
     - Class: 114
-      Script: {instanceID: 13040}
+      Script: {instanceID: 13048}
     - Class: 114
-      Script: {instanceID: 13044}
+      Script: {instanceID: 13052}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -409,6 +409,12 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SawStartController
+  - hash:
+      serializedVersion: 2
       Hash: b3ab2106268377ffe25dd18ac23dca28
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -419,6 +425,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: ScrollRect
+  - hash:
+      serializedVersion: 2
+      Hash: f0c8e13d0c14e100b036663e7d3b4746
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SAnimator
   - hash:
       serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
@@ -529,7 +541,13 @@ ScriptsOnlyBuild:
     className: TimelineAsset
   - hash:
       serializedVersion: 2
-      Hash: 6fcec1ffc2d3116db1a6a15011aa9e63
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PlatformCreator
+  - hash:
+      serializedVersion: 2
+      Hash: 589c309a4cae0886ce28a9d43bb7c0ec
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlatformController
@@ -571,7 +589,7 @@ ScriptsOnlyBuild:
     className: RiverController
   - hash:
       serializedVersion: 2
-      Hash: 0af7ba0b42615228ce08dd957bb65c96
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SkinAnimationController
@@ -701,13 +719,7 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: SawStartController
   platform: 19
   scenePathNames:
   - Assets/Scenes/GameScene.unity
-  playerPath: E:/UNITYPROJECTS/Builds/CubeGo.exe
+  playerPath: F:/Work/UnityBuilds/Fym/CubeGo.exe

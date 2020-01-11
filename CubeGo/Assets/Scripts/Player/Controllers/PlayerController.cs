@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
             return; 
         }
 
-        if (Math.Abs(movingAnimation["movingAnimation"].time - SmartSettings.Data.jumpingTime) <= 0.02f) // needs to be changed to detection of animation duration 
+        if (Math.Abs(movingAnimation["movingAnimation"].time - SmartSettings.Data.jumpingTime) <= 0.034f) // needs to be changed to detection of animation duration 
         {
             if (bottomCollider.selectedCube.GetComponent<BlockController>().speed.magnitude > 0)
             {
