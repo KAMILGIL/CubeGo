@@ -25,10 +25,10 @@ public class MapGenerator : MonoBehaviour
 
     private void Start()
     {
+        layerPrefab = Resources.Load<GameObject>("Objects/Layer");
+        
         prefabManager = GetComponent<PrefabManager>();
         prefabManager.HandlePrefabs();
-
-        layerPrefab = Resources.Load<GameObject>("Objects/Layer");
     }
 
     private void Update()
@@ -110,7 +110,7 @@ public class MapGenerator : MonoBehaviour
         {
             position = layers[layers.Count - 1].top;
         }
-        
+
         GameObject layer = Instantiate(layerPrefab, position, Quaternion.identity);
         LayerController layerController = layer.GetComponent<LayerController>(); 
         

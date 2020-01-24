@@ -37,6 +37,12 @@ public class PlatformController : MonoBehaviour
         SetSkin();
     }
 
+    private void SetPlatformEnvironment()
+    {
+        
+    }
+    
+
     private void Update()
     {
         if (blocks.Count > 0)
